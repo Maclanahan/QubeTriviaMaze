@@ -21,10 +21,17 @@ namespace TriviaMaze
 
         public QuestionFactory()
         {
+            questions = new List<AbstractQuestion>();
+
             LoadData();
 
-            PrintData();
+            CreateList();
 
+        }
+
+        public List<AbstractQuestion> getQuestions()
+        {
+            return questions;
         }
 
         private void LoadData()
@@ -94,7 +101,27 @@ namespace TriviaMaze
             }
         }
 
-        public void PrintData()
+        public void CreateList()
+        {
+            getMCQuestion();
+            getTFQuestions();
+            getSAQuestions();
+
+            populateQuestions();
+            shuffleQuestion();
+
+            //questions.
+
+            for (int i = 0; i < questions.Count; i++)
+                questions[i].toString();
+
+
+                sql_con.Close();
+
+            Console.ReadLine();
+        }
+
+        private void getMCQuestion()
         {
             string stm = "SELECT * FROM MCQuestions";
 
@@ -104,21 +131,82 @@ namespace TriviaMaze
                 {
                     while (rdr.Read())
                     {
-                        Console.Write("{0} ", rdr["Question"]);
-                        Console.Write("{0} ", rdr["ChoiceA"]);
-                        Console.Write("{0} ", rdr["ChoiceB"]);
-                        Console.Write("{0} ", rdr["ChoiceC"]);
-                        Console.Write("{0} ", rdr["ChoiceD"]);
-                        Console.Write("{0} ", rdr["Answer"]);
+                        List<string> choices = new List<string>();
+                       
+                        choices.Add((string)rdr["ChoiceA"]);
+                        choices.Add((string)rdr["ChoiceB"]);
+                        choices.Add((string)rdr["ChoiceC"]);
+                        choices.Add((string)rdr["ChoiceD"]);
 
+                        questions.Add(new MultipleChoiceQuestion((string)rdr["Question"], (string)rdr["Answer"], choices));
 
                     }
                 }
             }
-
-            sql_con.Close();
-
-            Console.ReadLine();
         }
+
+        private void getTFQuestions()
+        {
+            string stm = "SELECT * FROM TFQuestions";
+
+            using (SQLiteCommand cmd = new SQLiteCommand(stm, sql_con))
+            {
+                using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                {
+                    while (rdr.Read())
+                    {
+                        questions.Add(new TrueFalseQuestion((string)rdr["Question"], (string)rdr["Answer"]));
+                    }
+                }
+            }
+        }
+
+        private void getSAQuestions()
+        {
+            string stm = "SELECT * FROM SAQuestions";
+
+            using (SQLiteCommand cmd = new SQLiteCommand(stm, sql_con))
+            {
+                using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                {
+                    while (rdr.Read())
+                    {
+                        questions.Add(new ShortAnswerQuestion((string)rdr["Question"], (string)rdr["Answer"]));
+                    }
+                }
+            }
+        }
+
+        private void populateQuestions()
+        {
+            int originalCount = questions.Count;
+
+            for (int i = 0; i < originalCount; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    questions.Add(questions[i]);
+                }
+            }
+        }
+
+        private void shuffleQuestion()
+        {
+            Random rand = new Random();
+
+            for(int i = 0; i < questions.Count; i++)
+            {
+                swapQuestions(i, rand.Next(i, questions.Count));
+            }
+
+        }
+
+        private void swapQuestions(int i, int j)
+        {
+            AbstractQuestion temp = questions[i];
+            questions[i] = questions[j];
+            questions[j] = temp;
+        }
+
     }
 }

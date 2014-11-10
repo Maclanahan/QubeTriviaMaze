@@ -7,9 +7,13 @@ namespace TriviaMaze
 {
     class MultipleChoiceQuestion : AbstractQuestion
     {
-        public MultipleChoiceQuestion(string quest, string answer, List<String> choices)
-            : base(quest, answer, choices)
-        { }
+        protected List<string> sChoices;
+
+        public MultipleChoiceQuestion(string quest, string answer, List<string> choices)
+            : base(quest, answer)
+        {
+            sChoices = choices;
+        }
 
         override protected void displayChoices()
         {

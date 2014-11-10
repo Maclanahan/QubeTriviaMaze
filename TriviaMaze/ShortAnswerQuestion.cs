@@ -7,8 +7,8 @@ namespace TriviaMaze
 {
     class ShortAnswerQuestion :AbstractQuestion
     {
-        public ShortAnswerQuestion(string quest, string answer, List<String> choices)
-            : base(quest, answer, choices)
+        public ShortAnswerQuestion(string quest, string answer)
+            : base(quest, answer)
         { }
 
         override protected void displayChoices()
