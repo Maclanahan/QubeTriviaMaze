@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="AbstractQuestion.cs" />
     <Compile Include="Class4.cs" />
+    <Compile Include="DoorFactory.cs" />
+    <Compile Include="MazeFactory.cs" />
     <Compile Include="MultipleChoiceQuestion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

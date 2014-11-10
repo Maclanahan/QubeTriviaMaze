@@ -9,7 +9,7 @@ namespace TriviaMaze
     {
         public MazeFacotry()
         {
-
+            
         }
 
         public Room[,] makeMaze(int size)
