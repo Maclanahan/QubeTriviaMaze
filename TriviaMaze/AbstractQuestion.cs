@@ -10,14 +10,14 @@ namespace TriviaMaze
     {
         protected string sQuest;
         protected string sAnswer;
-        protected List<String> sChoices;
+        //protected List<String> sChoices;
 
 
-        public AbstractQuestion(string quest, string answer, List<String> choices)
+        public AbstractQuestion(string quest, string answer)
         {
             sQuest = quest;
             sAnswer = answer;
-            sChoices = choices;
+            //sChoices = choices;
 
         }
 
@@ -52,6 +52,14 @@ namespace TriviaMaze
 
             Console.WriteLine("wrong");
             return false;
+        }
+
+        public void toString()
+        {
+            askQuestion();
+
+            displayChoices();
+
         }
 
     }

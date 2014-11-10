@@ -48,9 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractQuestion.cs" />
+<<<<<<< HEAD
     <Compile Include="Class4.cs" />
     <Compile Include="DoorFactory.cs" />
     <Compile Include="MazeFactory.cs" />
+=======
+>>>>>>> origin/master
     <Compile Include="MultipleChoiceQuestion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
