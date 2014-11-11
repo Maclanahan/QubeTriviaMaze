@@ -8,18 +8,22 @@ namespace TriviaMaze
 {
     class Program
     {
+        private const int _size = 3;
+
         static void Main(string[] args)
         {
             bool play = true;
             string str;
             Driver driver; 
             QuestionFactory qs = new QuestionFactory();
+            MazeFactory mf = new MazeFactory();
+            
 
             while (play)
             {
-                driver = new Driver(0, 0, 2, 2); //Room Class should know if it's the endroom or not
+                driver = new Driver(0, 0, _size-1, _size-1); //coords for start room and then end room
 
-                driver.enterMaze();
+                driver.enterMaze(mf.makeMaze(_size));
 
                 Console.WriteLine("Would you like to play again?(Y/N)");
                 str = Console.ReadLine().ToUpper();

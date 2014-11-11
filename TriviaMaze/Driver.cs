@@ -20,11 +20,11 @@ namespace TriviaMaze
             _endYPos = endYPos;
         }
 
-        public void enterMaze()
+        public void enterMaze(Room[,] maze)
         {
             int n;
 
-            while(_xpos != _endXPos || _ypos != _endYPos)
+            while(!maze[_xpos,_ypos].isEndRoom())
             {
                 Console.WriteLine("You are in room: x-" + _xpos + " y-" + _ypos + 
                     "\nWhere would you like to go?" +
@@ -32,13 +32,13 @@ namespace TriviaMaze
                     "\nEnter 1(Up), 2(Right), 3(Down), 4(Left)");
                 n = int.Parse(Console.ReadLine());
 
-                if (n == 1)
+                if (n == 1 && _ypos != 0)
                     this.moveUp();
-                else if (n == 2)
+                else if (n == 2 && _xpos != maze.GetLength(0) - 1)
                     this.moveRight();
-                else if (n == 3)
+                else if (n == 3 && _ypos != maze.GetLength(1) - 1)
                     this.moveDown();
-                else if (n == 4)
+                else if (n == 4 && _xpos != 0)
                     this.moveLeft();
                 else
                     Console.WriteLine("Input was not valid.");
