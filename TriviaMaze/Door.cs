@@ -38,7 +38,30 @@ namespace TriviaMaze
             if (_state == 0)
                 return true;
 
-            return _question.knock(); //return true if answered correctly
+            if (_question.knock())
+            {
+                _state = 0;
+                return true;
+            }
+            else
+            {
+                _state = 2;
+                return false;
+            }
+
+            //return isDoorOpen(); //return true if answered correctly
+        }
+
+        public string getState()
+        {
+            if (_state == 0)
+                return "=";
+            if (_state == 1)
+                return "/";
+            if (_state == 2)
+                return "x";
+
+            return " ";
         }
     }
 }

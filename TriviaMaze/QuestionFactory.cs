@@ -15,9 +15,9 @@ namespace TriviaMaze
 
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
-        private SQLiteDataAdapter DB;
-        private DataSet DS;
-        private DataTable DT;
+        //private SQLiteDataAdapter DB;
+        //private DataSet DS;
+        //private DataTable DT;
 
         public QuestionFactory()
         {
@@ -98,6 +98,7 @@ namespace TriviaMaze
             {
                 sql_con = new SQLiteConnection("Data Source=questions.db;Version=3;New=False;Compress=True;");
                 sql_con.Open();
+               // Console.WriteLine("here");
             }
         }
 
@@ -122,7 +123,8 @@ namespace TriviaMaze
         private void getMCQuestion()
         {
             string stm = "SELECT * FROM MCQuestions";
-
+            sql_con.Close();
+            sql_con.Open();
             using (SQLiteCommand cmd = new SQLiteCommand(stm, sql_con))
             {
                 using (SQLiteDataReader rdr = cmd.ExecuteReader())

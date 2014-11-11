@@ -11,6 +11,9 @@ namespace TriviaMaze
         private int _ypos;
         private bool _endRoom = false;
 
+        public int getXpos() { return _xpos; }
+        public int getYpos() { return _ypos; }
+
         public Room(int xpos, int ypos, int endxpos, int endypos)
         {
             _xpos = xpos;

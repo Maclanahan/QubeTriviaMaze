@@ -25,6 +25,7 @@ namespace TriviaMaze
             }
 
             Console.WriteLine("Answer by typing 1, 2, 3, or 4.");
+            Console.WriteLine("Answer: " + sAnswer);
 
         }
 

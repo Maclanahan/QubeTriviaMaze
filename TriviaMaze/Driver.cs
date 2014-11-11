@@ -11,61 +11,78 @@ namespace TriviaMaze
         private int _ypos;
         private int _endXPos;
         private int _endYPos;
+        private int _size;
 
-        public Driver(int xpos, int ypos, int endXPos, int endYPos)
+        private Room currentRoom;
+
+        public Driver(int xpos, int ypos, int endXPos, int endYPos, int size)
         {
             _xpos = xpos;
             _ypos = ypos;
             _endXPos = endXPos;
             _endYPos = endYPos;
+            _size = size;
         }
 
-        public void enterMaze(Room[,] maze)
+        public void enterMaze(Maze maze)
         {
             int n;
 
-            while(!maze[_xpos,_ypos].isEndRoom())
+            currentRoom = maze.getCurrentRoom(_xpos, _ypos);
+
+            while(!maze.isFinalRoom(currentRoom.getXpos(), currentRoom.getYpos() ) )
             {
-                Console.WriteLine("You are in room: x-" + _xpos + " y-" + _ypos + 
+                maze.PrintMaze(currentRoom);
+                Console.WriteLine("You are in room: x-" + currentRoom.getXpos() + " y-" + currentRoom.getYpos() + 
                     "\nWhere would you like to go?" +
                     "\nThe end is at x-" + _endXPos + " y-" + _endYPos + 
                     "\nEnter 1(Up), 2(Right), 3(Down), 4(Left)");
-                n = int.Parse(Console.ReadLine());
 
-                if (n == 1 && _ypos != 0)
-                    this.moveUp();
-                else if (n == 2 && _xpos != maze.GetLength(0) - 1)
-                    this.moveRight();
-                else if (n == 3 && _ypos != maze.GetLength(1) - 1)
-                    this.moveDown();
-                else if (n == 4 && _xpos != 0)
-                    this.moveLeft();
-                else
-                    Console.WriteLine("Input was not valid.");
+                string input = Console.ReadLine();
+
+                if(input != "")
+                {
+                    n = int.Parse(input);
+
+                    if (n == 1 && currentRoom.getYpos() != 0)
+                        this.moveUp(maze);
+                    else if (n == 2 && currentRoom.getXpos() != _size - 1)
+                        this.moveRight(maze);
+                    else if (n == 3 && currentRoom.getYpos() != _size - 1)
+                        this.moveDown(maze);
+                    else if (n == 4 && currentRoom.getXpos() != 0)
+                        this.moveLeft(maze);
+                    else
+                        Console.WriteLine("Input was not valid.");
+                }   
 
             }
 
             Console.WriteLine("You won!");
         }
 
-        private void moveUp()
+        private void moveUp(Maze maze)
         {
             _ypos -= 1;
+            currentRoom = maze.Move(currentRoom, 0, -1);
         }
 
-        private void moveRight()
+        private void moveRight(Maze maze)
         {
             _xpos += 1;
+            currentRoom = maze.Move(currentRoom, 1, 0);
         }
 
-        private void moveDown()
+        private void moveDown(Maze maze)
         {
             _ypos += 1;
+            currentRoom = maze.Move(currentRoom, 0, 1);
         }
 
-        private void moveLeft()
+        private void moveLeft(Maze maze)
         {
             _xpos -= 1;
+            currentRoom = maze.Move(currentRoom, -1, 0);
         }
     }
 }

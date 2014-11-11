@@ -51,6 +51,7 @@
     <Compile Include="Door.cs" />
     <Compile Include="DoorFactory.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="Maze.cs" />
     <Compile Include="MazeFactory.cs" />
     <Compile Include="MultipleChoiceQuestion.cs" />
     <Compile Include="Program.cs" />

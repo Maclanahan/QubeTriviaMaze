@@ -44,7 +44,7 @@ namespace TriviaMaze
 
         protected Boolean checkAnswer(string ans)
         {
-            if (ans.ToLower().Equals(sAnswer))
+            if (ans.ToLower().Equals(sAnswer.ToLower()))
             {
                 Console.WriteLine("CORRECT!");
                 return true;
