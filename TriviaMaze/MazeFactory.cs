@@ -5,9 +5,9 @@ using System.Text;
 
 namespace TriviaMaze
 {
-    class MazeFacotry
+    class MazeFactory
     {
-        public MazeFacotry()
+        public MazeFactory()
         {
             
         }
@@ -19,7 +19,7 @@ namespace TriviaMaze
             {
                 for(int j = 0; j < size; j++)
                 {
-                    maze[i, j] = new Room(i, j);
+                    maze[i, j] = new Room(i, j, size-1, size-1);
                 }
             }//end outer loop
             return maze;

@@ -48,16 +48,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractQuestion.cs" />
-<<<<<<< HEAD
-    <Compile Include="Class4.cs" />
+    <Compile Include="Door.cs" />
     <Compile Include="DoorFactory.cs" />
+    <Compile Include="Driver.cs" />
     <Compile Include="MazeFactory.cs" />
-=======
->>>>>>> origin/master
     <Compile Include="MultipleChoiceQuestion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionFactory.cs" />
+    <Compile Include="Room.cs" />
     <Compile Include="ShortAnswerQuestion.cs" />
     <Compile Include="TrueFalseQuestion.cs" />
   </ItemGroup>

@@ -112,13 +112,11 @@ namespace TriviaMaze
 
             //questions.
 
-            for (int i = 0; i < questions.Count; i++)
-                questions[i].toString();
+            /*for (int i = 0; i < questions.Count; i++)
+                questions[i].toString();*/ //reads questions
 
 
                 sql_con.Close();
-
-            Console.ReadLine();
         }
 
         private void getMCQuestion()
