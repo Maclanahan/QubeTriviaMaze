@@ -12,26 +12,51 @@ namespace TriviaMaze
 
         static void Main(string[] args)
         {
-            bool play = true;
+            bool repeat = true;
             string str;
-            Driver driver; 
+            Driver driver;
+            QuestionTool qt;
             QuestionFactory qs = new QuestionFactory();
-            qs.CreateList();
-            DoorFactory df = new DoorFactory(qs.getQuestions());
-            MazeFactory mf = new MazeFactory();
-            
+            DoorFactory df;
+            MazeFactory mf;
 
-            while (play)
+            while (repeat)
             {
-                driver = new Driver(0, 0, _size-1, _size-1, _size); //coords for start room and then end room
+                Console.WriteLine("What would you like to do?\n" +
+                                   "1: Play Trivia Maze\n" +
+                                   "2: Manage Questions\n" +
+                                   "3: Quit");
 
-                driver.enterMaze(mf.makeMaze(_size, df.makeHDoors(_size), df.makeVDoors(_size) ) );
+                str = Console.ReadLine();
 
-                Console.WriteLine("Would you like to play again?(Y/N)");// can't play too many times or we will run out of questions to give to the doors
-                str = Console.ReadLine().ToUpper();
+                if (str.Equals("1"))
+                {
+                    bool play = true;
 
-                if (str.Equals("N"))
-                    play = false;
+                    while (play)
+                    {
+                        qs.CreateList();
+                        df = new DoorFactory(qs.getQuestions());
+                        mf = new MazeFactory();
+
+                        driver = new Driver(0, 0, _size - 1, _size - 1, _size); //coords for start room and then end room
+
+                        driver.enterMaze(mf.makeMaze(_size, df.makeHDoors(_size), df.makeVDoors(_size)));
+
+                        Console.WriteLine("Would you like to play again?(Y/N)");
+                        str = Console.ReadLine().ToUpper();
+
+                        if (str.Equals("N"))
+                            play = false;
+                    }
+                }
+                else if (str.Equals("2"))
+                    qt = new QuestionTool();
+                else if (str.Equals("3"))
+                    repeat = false;
+                else
+                    Console.WriteLine("Input was invalid.");
+
             }
         }
     }
