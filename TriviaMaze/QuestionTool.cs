@@ -16,9 +16,7 @@ namespace TriviaMaze
         private void manageQuestions()
         {
             bool repeat = true;
-            MultipleChoiceManager mcm;
-            TrueFalseManager tfm;
-            ShortAnswerManager sam;
+            QuestionManager qm;
 
             while (repeat)
             {
@@ -26,16 +24,16 @@ namespace TriviaMaze
                                     "1: Multiple Choice\n" +
                                     "2: True/False\n" +
                                     "3: Short Answer\n" +
-                                    "4: Exit\n");
+                                    "4: Exit");
 
                 string input = Console.ReadLine();
 
                 if (input.Equals("1"))
-                    mcm = new MultipleChoiceManager();
+                    qm = new QuestionManager("MCQuestions");
                 else if (input.Equals("2"))
-                    tfm = new TrueFalseManager();
+                    qm = new QuestionManager("TFQuestions");
                 else if (input.Equals("3"))
-                    sam = new ShortAnswerManager();
+                    qm = new QuestionManager("SAQuestions");
                 else if (input.Equals("4"))
                     repeat = false;
                 else

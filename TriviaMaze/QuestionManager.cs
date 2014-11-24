@@ -7,18 +7,19 @@ using System.Data;
 
 namespace TriviaMaze
 {
-    class TrueFalseManager
+    class QuestionManager
     {
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
+        private string _type;
 
-        public TrueFalseManager()
-        {   
+        public QuestionManager(string type)
+        {
+            _type = type;
             sql_con = new SQLiteConnection("Data Source=questions.db;Version=3;New=False;Compress=True;");
+            
             sql_con.Open();
-
             manage();
-
             sql_con.Close();
         }
 
@@ -28,7 +29,7 @@ namespace TriviaMaze
 
             while (repeat)
             {
-                Console.WriteLine("You're currently managing True/False questions.\n" +
+                Console.WriteLine("You're currently managing " + _type + "\n" +
                                     "What would you like to do?\n" +
                                     "1: Add\n" +
                                     "2: Remove\n" +
@@ -47,8 +48,6 @@ namespace TriviaMaze
                     repeat = false;
                 else
                     Console.WriteLine("Input was invalid.");
-
-                Console.WriteLine("\n");
             }
         }
 
@@ -56,28 +55,72 @@ namespace TriviaMaze
         {
             bool correct = false;
             string answer = "";
+            string one = "";
+            string two = "";
+            string three = "";
+            string four = " ";
 
             Console.Write("Question: ");
             string question = Console.ReadLine();
 
-            while (!correct)
+            if (_type.Equals("MCQuestions"))
+            {
+                Console.Write("1: ");
+                one = Console.ReadLine();
+
+                Console.Write("2: ");
+                two = Console.ReadLine();
+
+                Console.Write("3: ");
+                three = Console.ReadLine();
+
+                Console.Write("4: ");
+                four = Console.ReadLine();
+            }
+            
+            // Makes sure that answer inputted matches the question
+            while (!correct )
             {
                 Console.Write("Answer: ");
-                answer = Console.ReadLine().ToLower();
+                answer = Console.ReadLine();
 
-                if (answer.Equals("t") || answer.Equals("true"))
-                    answer = "1";
+                if(_type.Equals("TFQuestions"))
+                {
+                    if (answer.Equals("t") || answer.Equals("true"))
+                        answer = "1";
 
-                if (answer.Equals("f") || answer.Equals("false"))
-                    answer = "2";
+                    if (answer.Equals("f") || answer.Equals("false"))
+                        answer = "2";
+                }
 
-                if (answer.Equals("1") || answer.Equals("2"))
+                if (answer.Equals("1") || answer.Equals("2") || answer.Equals("3") || answer.Equals("4") || _type.Equals("SAQuestions"))
                     correct = true;
                 else
                     Console.WriteLine("Answer was invalid. Try again.");
             }
 
-            sql_cmd = new SQLiteCommand("INSERT INTO TFQuestions (Question, Answer) VALUES (@question, @answer)", sql_con);
+
+            if (_type.Equals("MCQuestions"))
+            {
+                sql_cmd = new SQLiteCommand("INSERT INTO " + _type + " (Question, ChoiceA, ChoiceB, ChoiceC, ChoiceD, Answer) VALUES (@question, @one, @two, @three, @four, @answer)", sql_con);
+
+                SQLiteParameter pOne = new SQLiteParameter("@one", DbType.String) { Value = one };
+                SQLiteParameter pTwo = new SQLiteParameter("@two", DbType.String) { Value = two };
+                SQLiteParameter pThree = new SQLiteParameter("@three", DbType.String) { Value = three };
+                SQLiteParameter pFour = new SQLiteParameter("@four", DbType.String) { Value = four };
+
+                sql_cmd.Parameters.Add(pOne);
+                sql_cmd.Parameters.Add(pTwo);
+                sql_cmd.Parameters.Add(pThree);
+                sql_cmd.Parameters.Add(pFour);
+            }
+            else if ( _type.Equals("TFQuestions") || _type.Equals("SAQuestions"))
+                sql_cmd = new SQLiteCommand("INSERT INTO " + _type + " (Question, Answer) VALUES (@question, @answer)", sql_con);
+            else
+            {
+                Console.WriteLine("Invalid Type.");
+                return;
+            }
 
             SQLiteParameter pQuestion = new SQLiteParameter("@question", DbType.String ) { Value = question };
             SQLiteParameter pAnswer = new SQLiteParameter("@answer", DbType.String) { Value = answer };
@@ -91,7 +134,7 @@ namespace TriviaMaze
         private void remove()
         {
             int i, num = 0;
-            string stm = "SELECT * FROM TFQuestions";
+            string stm = "SELECT * FROM " + _type;
             string str = "";
             bool repeat = true;
 
@@ -142,7 +185,7 @@ namespace TriviaMaze
 
             Console.WriteLine("Removed: " + num + ") Question: " + str);
 
-            sql_cmd = new SQLiteCommand("DELETE FROM TFQuestions WHERE Question=@Question", sql_con);
+            sql_cmd = new SQLiteCommand("DELETE FROM " + _type + " WHERE Question=@Question", sql_con);
 
             SQLiteParameter pQuestion = new SQLiteParameter("@Question", DbType.String) { Value = str };
             sql_cmd.Parameters.Add(pQuestion);
@@ -152,7 +195,7 @@ namespace TriviaMaze
 
         private void display()
         {
-            string stm = "SELECT * FROM TFQuestions";
+            string stm = "SELECT * FROM " + _type;
             
             using (SQLiteCommand cmd = new SQLiteCommand(stm, sql_con))
             {
@@ -163,6 +206,15 @@ namespace TriviaMaze
                     {
                         Console.WriteLine(i + ")");
                         Console.WriteLine("Question: " + (string)rdr["Question"]);
+
+                        if (_type.Equals("MCQuestions"))
+                        {
+                            Console.WriteLine("1: " + (string)rdr["ChoiceA"]);
+                            Console.WriteLine("2: " + (string)rdr["ChoiceB"]);
+                            Console.WriteLine("3: " + (string)rdr["ChoiceC"]);
+                            Console.WriteLine("4: " + (string)rdr["ChoiceD"]);
+                        }
+                        
                         Console.WriteLine("Answer: " + (string)rdr["Answer"]);
 
                         i += 1;
