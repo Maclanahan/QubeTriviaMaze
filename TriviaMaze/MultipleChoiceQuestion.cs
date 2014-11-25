@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace TriviaMaze
 {
+    [Serializable()]
     class MultipleChoiceQuestion : AbstractQuestion
     {
         protected List<string> sChoices;
@@ -27,6 +30,20 @@ namespace TriviaMaze
             Console.WriteLine("Answer by typing 1, 2, 3, or 4.");
             Console.WriteLine("Answer: " + sAnswer);
 
+        }
+
+        public MultipleChoiceQuestion(SerializationInfo info, StreamingContext ctxt)
+            : base(info, ctxt)
+        {
+            this.sChoices = (List<string>)info.GetValue("sChoices", typeof(List<string>));
+        }
+
+        override public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("sChoices", this.sChoices);
+            //base.GetObjectData(info, ctxt);
+            info.AddValue("sQuest", this.sQuest);
+            info.AddValue("sAnswer", this.sAnswer);
         }
 
     }

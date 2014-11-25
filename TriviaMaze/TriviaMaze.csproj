@@ -60,6 +60,8 @@
     <Compile Include="QuestionFactory.cs" />
     <Compile Include="QuestionTool.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="SaveData.cs" />
+    <Compile Include="Serializer.cs" />
     <Compile Include="ShortAnswerQuestion.cs" />
     <Compile Include="TrueFalseQuestion.cs" />
   </ItemGroup>

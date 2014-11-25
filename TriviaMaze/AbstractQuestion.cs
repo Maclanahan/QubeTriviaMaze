@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 
 namespace TriviaMaze
 {
-    abstract class AbstractQuestion
+    [Serializable()]
+    abstract class AbstractQuestion : ISerializable
     {
         protected string sQuest;
         protected string sAnswer;
@@ -62,5 +65,19 @@ namespace TriviaMaze
 
         }
 
+        public AbstractQuestion(SerializationInfo info, StreamingContext ctxt)
+        {
+            this.sQuest = (string)info.GetValue("sQuest", typeof(string));
+            this.sAnswer = (string)info.GetValue("sAnswer", typeof(string));
+            
+        }
+
+        abstract public void GetObjectData(SerializationInfo info, StreamingContext ctxt);
+
+        //public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        //{
+        //    info.AddValue("sQuest", this.sQuest);
+        //    info.AddValue("sAnswer", this.sAnswer);
+        //}
     }
 }

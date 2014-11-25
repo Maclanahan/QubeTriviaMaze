@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace TriviaMaze
 {
-    class Door
+    [Serializable()]
+    class Door : ISerializable
     {
         private int _state; // 0 = open, 1 = closed, 2 = locked
         private AbstractQuestion _question;
@@ -62,6 +65,19 @@ namespace TriviaMaze
                 return "x";
 
             return " ";
+        }
+
+        public Door(SerializationInfo info, StreamingContext ctxt)
+        {
+            this._state = (int)info.GetValue("state", typeof(int));
+            this._question = (AbstractQuestion)info.GetValue("question", typeof(AbstractQuestion));
+            
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("state", this._state);
+            info.AddValue("question", this._question);
         }
     }
 }

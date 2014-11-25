@@ -36,7 +36,7 @@ namespace TriviaMaze
                 Console.WriteLine("You are in room: x-" + currentRoom.getXpos() + " y-" + currentRoom.getYpos() + 
                     "\nWhere would you like to go?" +
                     "\nThe end is at x-" + _endXPos + " y-" + _endYPos + 
-                    "\nEnter 1(Up), 2(Right), 3(Down), 4(Left)");
+                    "\nEnter 1(Up), 2(Right), 3(Down), 4(Left), 0(Save)");
 
                 string input = Console.ReadLine();
 
@@ -52,6 +52,8 @@ namespace TriviaMaze
                         this.moveDown(maze);
                     else if (n == 4 && currentRoom.getXpos() != 0)
                         this.moveLeft(maze);
+                    else if (n == 0)
+                        saveGame(maze);
                     else
                         Console.WriteLine("Input was not valid.");
                 }   
@@ -59,6 +61,11 @@ namespace TriviaMaze
             }
 
             Console.WriteLine("You won!");
+        }
+
+        public void setCurrentRoom(Room current)
+        {
+            currentRoom = current;
         }
 
         private void moveUp(Maze maze)
@@ -83,6 +90,14 @@ namespace TriviaMaze
         {
             _xpos -= 1;
             currentRoom = maze.Move(currentRoom, -1, 0);
+        }
+
+        private void saveGame(Maze maze)
+        {
+            SaveData save = new SaveData(maze, currentRoom);
+
+            Serializer serializer = new Serializer();
+            serializer.Serialize("output.txt", save);
         }
     }
 }

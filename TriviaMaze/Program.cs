@@ -12,52 +12,77 @@ namespace TriviaMaze
 
         static void Main(string[] args)
         {
+            QuestionTool qt;
             bool repeat = true;
             string str;
-            Driver driver;
-            QuestionTool qt;
-            QuestionFactory qs = new QuestionFactory();
-            DoorFactory df;
-            MazeFactory mf;
 
             while (repeat)
             {
                 Console.WriteLine("What would you like to do?\n" +
                                    "1: Play Trivia Maze\n" +
                                    "2: Manage Questions\n" +
-                                   "3: Quit");
+                                   "3: Load Game\n" +
+                                   "4: Quit");
 
                 str = Console.ReadLine();
 
                 if (str.Equals("1"))
                 {
-                    bool play = true;
-
-                    while (play)
-                    {
-                        qs.CreateList();
-                        df = new DoorFactory(qs.getQuestions());
-                        mf = new MazeFactory();
-
-                        driver = new Driver(0, 0, _size - 1, _size - 1, _size); //coords for start room and then end room
-
-                        driver.enterMaze(mf.makeMaze(_size, df.makeHDoors(_size), df.makeVDoors(_size)));
-
-                        Console.WriteLine("Would you like to play again?(Y/N)");
-                        str = Console.ReadLine().ToUpper();
-
-                        if (str.Equals("N"))
-                            play = false;
-                    }
+                    playGame(false);
                 }
                 else if (str.Equals("2"))
                     qt = new QuestionTool();
                 else if (str.Equals("3"))
+                    playGame(true);
+                else if (str.Equals("4"))
                     repeat = false;
                 else
                     Console.WriteLine("Input was invalid.");
 
             }
+        }
+
+
+        private static void playGame(bool isLoaded)
+        {
+            Driver driver;
+            
+            QuestionFactory qs = new QuestionFactory();
+            DoorFactory df;
+            MazeFactory mf;
+
+            string str;
+
+            bool play = true;
+
+            while (play)
+            {
+                qs.CreateList();
+                df = new DoorFactory(qs.getQuestions());
+                mf = new MazeFactory();
+
+                driver = new Driver(0, 0, _size - 1, _size - 1, _size); //coords for start room and then end room
+
+                if (isLoaded)
+                    loadGame(driver);
+                else
+                    driver.enterMaze(mf.makeMaze(_size, df.makeHDoors(_size), df.makeVDoors(_size)));
+
+                Console.WriteLine("Would you like to play again?(Y/N)");
+                str = Console.ReadLine().ToUpper();
+
+                if (str.Equals("N"))
+                    play = false;
+            }
+        }
+
+        private static void loadGame(Driver driver)
+        {
+            Serializer serializer = new Serializer();
+            SaveData load = serializer.Deserialize("output.txt");
+
+            driver.setCurrentRoom(load.getPosition());
+            driver.enterMaze(load.getMaze());
         }
     }
 }

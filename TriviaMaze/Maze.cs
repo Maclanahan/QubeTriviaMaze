@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace TriviaMaze
 {
-    class Maze
+    [Serializable()]
+    class Maze : ISerializable
     {
         private Room[,] rooms;
         private Door[,] xDoors;
@@ -93,6 +96,22 @@ namespace TriviaMaze
                 return "P";
 
             return " ";
+        }
+
+        public Maze(SerializationInfo info, StreamingContext ctxt)
+        {
+            this.rooms = (Room[,])info.GetValue("rooms", typeof(Room[,]));
+            this.xDoors = (Door[,])info.GetValue("xDoors", typeof(Door[,]));
+            this.yDoors = (Door[,])info.GetValue("yDoors", typeof(Door[,]));
+            this.finalRoom = (Room)info.GetValue("finalRoom", typeof(Room));
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("rooms", this.rooms);
+            info.AddValue("xDoors", this.xDoors);
+            info.AddValue("yDoors", this.yDoors);
+            info.AddValue("finalRoom", this.finalRoom);
         }
     }
 }

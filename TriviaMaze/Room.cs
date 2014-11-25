@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace TriviaMaze
 {
-    class Room
+    [Serializable()]
+    class Room : ISerializable
     {
         private int _xpos;
         private int _ypos;
@@ -26,6 +29,20 @@ namespace TriviaMaze
         public bool isEndRoom()
         {
             return _endRoom;
+        }
+
+        public Room(SerializationInfo info, StreamingContext ctxt)
+        {
+            this._xpos = (int)info.GetValue("xpos", typeof(int));
+            this._ypos = (int)info.GetValue("ypos", typeof(int));
+            this._endRoom = (bool)info.GetValue("endRoom", typeof(bool));
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("xpos", this._xpos);
+            info.AddValue("ypos", this._ypos);
+            info.AddValue("endRoom", this._endRoom);
         }
     }
 }
