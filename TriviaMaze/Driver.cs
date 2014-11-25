@@ -28,6 +28,9 @@ namespace TriviaMaze
         {
             int n;
 
+            _xpos = currentRoom.getXpos();
+            _ypos = currentRoom.getYpos();
+
             currentRoom = maze.getCurrentRoom(_xpos, _ypos);
 
             while(!maze.isFinalRoom(currentRoom.getXpos(), currentRoom.getYpos() ) )

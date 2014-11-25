@@ -59,6 +59,12 @@ namespace TriviaMaze
             return rooms[x, y];
         }
 
+        public void setCurrentRoom(Room cur)
+        {
+            
+        }
+
+
         public void PrintMaze(Room playerRoom)
         {
             for (int i = 0; i < rooms.GetLength(0); i++)

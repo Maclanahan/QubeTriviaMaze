@@ -81,6 +81,7 @@ namespace TriviaMaze
             Serializer serializer = new Serializer();
             SaveData load = serializer.Deserialize("output.txt");
 
+            //load.getMaze()
             driver.setCurrentRoom(load.getPosition());
             driver.enterMaze(load.getMaze());
         }
