@@ -156,14 +156,23 @@ namespace TriviaMaze
                     Console.WriteLine("Which question would you like to remove?\n" +
                                         "Enter the question's number or enter 0 to exit.");
 
-                    num = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        num = int.Parse(Console.ReadLine());
 
-                    if (num <= i && num > 0)
-                        repeat = false;
-                    else if (num == 0)
-                        return;
-                    else
+                        if (num <= i && num > 0)
+                            repeat = false;
+                        if (num == 0)
+                            return;
+                        else
+                            Console.WriteLine("Invalid input. Please try again.");
+                    }
+                    catch
+                    {
                         Console.WriteLine("Invalid input. Please try again.");
+                    }
+                    
+                        
 
                 }
 

@@ -41,17 +41,5 @@ namespace TriviaMaze
             }
 
         }
-
-        
-
-        private void manageTrueFalse()
-        {
-
-        }
-
-        private void manageShortAnswer()
-        {
-
-        }
     }
 }
