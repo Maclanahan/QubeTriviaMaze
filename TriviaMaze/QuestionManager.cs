@@ -7,7 +7,7 @@ using System.Data;
 
 namespace TriviaMaze
 {
-    class QuestionManager
+    public class QuestionManager
     {
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
@@ -18,13 +18,17 @@ namespace TriviaMaze
             _type = type;
             sql_con = new SQLiteConnection("Data Source=questions.db;Version=3;New=False;Compress=True;");
             
-            sql_con.Open();
-            manage();
-            sql_con.Close();
         }
 
-        private void manage()
+        public String getType()
         {
+            return _type;
+        }
+
+        public void manage()
+        {
+            sql_con.Open();
+
             bool repeat = true;
 
             while (repeat)
@@ -49,6 +53,8 @@ namespace TriviaMaze
                 else
                     Console.WriteLine("Input was invalid.");
             }
+
+            sql_con.Close();
         }
 
         private void add()

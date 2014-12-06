@@ -9,7 +9,7 @@ using System.IO;
 
 namespace TriviaMaze
 {
-    class QuestionFactory
+    public class QuestionFactory
     {
         private List<AbstractQuestion> questions;
 

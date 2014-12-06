@@ -9,7 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace TriviaMaze
 {
     [Serializable()]
-    abstract class AbstractQuestion : ISerializable
+    public abstract class AbstractQuestion : ISerializable
     {
         protected string sQuest;
         protected string sAnswer;

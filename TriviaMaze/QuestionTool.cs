@@ -29,17 +29,25 @@ namespace TriviaMaze
                 string input = Console.ReadLine();
 
                 if (input.Equals("1"))
+                {
                     qm = new QuestionManager("MCQuestions");
+                    qm.manage();
+                }
                 else if (input.Equals("2"))
+                {
                     qm = new QuestionManager("TFQuestions");
+                    qm.manage();
+                }
                 else if (input.Equals("3"))
+                {
                     qm = new QuestionManager("SAQuestions");
+                    qm.manage();
+                }
                 else if (input.Equals("4"))
                     repeat = false;
                 else
                     Console.WriteLine("Input was invalid.");
             }
-
         }
     }
 }

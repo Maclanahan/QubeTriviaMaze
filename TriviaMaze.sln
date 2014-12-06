@@ -1,18 +1,42 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriviaMaze", "TriviaMaze\TriviaMaze.csproj", "{3EF5B905-E7C0-441C-A96A-C368B46CD614}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriviaMazeTests", "TriviaMazeTests\TriviaMazeTests.csproj", "{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Debug|x86.ActiveCfg = Debug|x86
 		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Debug|x86.Build.0 = Debug|x86
+		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Release|Any CPU.ActiveCfg = Release|x86
+		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Release|Mixed Platforms.Build.0 = Release|x86
 		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Release|x86.ActiveCfg = Release|x86
 		{3EF5B905-E7C0-441C-A96A-C368B46CD614}.Release|x86.Build.0 = Release|x86
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DA72CEC4-7CC1-4E53-AF19-DEB967A56629}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
