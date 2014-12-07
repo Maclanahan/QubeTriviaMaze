@@ -54,6 +54,14 @@ namespace TriviaMaze
             return rooms[x, y].isEndRoom();
         }
 
+        public Door[,] getDoors(string doors)
+        {
+            if (doors.Equals("x"))
+                return xDoors;
+
+            return yDoors;
+        }
+
         public Room getCurrentRoom(int x, int y)
         {
             return rooms[x, y];
