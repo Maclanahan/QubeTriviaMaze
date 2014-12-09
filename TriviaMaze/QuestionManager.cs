@@ -15,8 +15,15 @@ namespace TriviaMaze
 
         public QuestionManager(string type)
         {
-            _type = type;
-            sql_con = new SQLiteConnection("Data Source=questions.db;Version=3;New=False;Compress=True;");
+            try
+            {
+                _type = type;
+                sql_con = new SQLiteConnection("Data Source=questions.db;Version=3;New=False;Compress=True;");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             
         }
 

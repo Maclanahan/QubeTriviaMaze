@@ -7,10 +7,7 @@ namespace TriviaMaze
 {
     class MazeFactory
     {
-        public MazeFactory()
-        {
-            
-        }
+        public MazeFactory(){ }
 
         public Maze makeMaze(int size, Door[,] xDoors, Door[,]yDoors)
         {

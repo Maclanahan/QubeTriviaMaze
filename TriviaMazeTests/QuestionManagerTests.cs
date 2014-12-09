@@ -8,18 +8,20 @@ namespace TriviaMazeTests
     public class QuestionManagerTests
     {
         [TestMethod]
-        public void constructorTest()
+        public void questionManagerConstructorTest()
         {
             QuestionManager manager = new QuestionManager("MCQuestions");
-            StringAssert.Contains(manager.getType(), "MCQuestions");
+            StringAssert.StartsWith(manager.getType(), "MCQuestions");
+            StringAssert.EndsWith(manager.getType(), "MCQuestions");
 
-            //Assert.Fail();
+            manager = new QuestionManager(null);
         }
 
         [TestMethod]
-        public void failingTest()
+        public void getTypeTest()
         {
-            Assert.Fail();
+            QuestionManager manager = new QuestionManager("TFQuestions");
+            StringAssert.Contains(manager.getType(), "TFQuestions");
         }
     }
 }
