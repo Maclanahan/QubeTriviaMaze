@@ -54,21 +54,21 @@ namespace TriviaMaze
             if (tracker.isEndRoom())
                 return true;
             //down
-            if (canGo(xPos + 0, yPos + 1, false))
+            if (canGo(xPos + 0, yPos + 1, false, false, false))
             {
                 //tracker = maze.getCurrentRoom(xPos + 0, yPos + 1);
                 if (checkIfMazeIsSolvableRec(maze.getCurrentRoom(xPos + 0, yPos + 1)))
                     return true;
             }
             //right
-            if (canGo(xPos + 1, yPos + 0, true))
+            if (canGo(xPos + 1, yPos + 0, true, false, false))
             {
                 //tracker = maze.getCurrentRoom(xPos + 1, yPos + 0);
                 if (checkIfMazeIsSolvableRec(maze.getCurrentRoom(xPos + 1, yPos + 0)))
                     return true;    
             }
             //up
-            if (canGo(xPos + 0, yPos - 1, false))
+            if (canGo(xPos + 0, yPos - 1, false, false, true))
             {
                 //tracker = maze.getCurrentRoom(xPos + 0, yPos - 1);
                 if (checkIfMazeIsSolvableRec(maze.getCurrentRoom(xPos + 0, yPos - 1)))
@@ -76,7 +76,7 @@ namespace TriviaMaze
             }
 
             //left
-            if (canGo(xPos - 1, yPos + 0, true))
+            if (canGo(xPos - 1, yPos + 0, true, true, false))
             {
                 //tracker = maze.getCurrentRoom(xPos - 1, yPos + 0);
                 if (checkIfMazeIsSolvableRec(maze.getCurrentRoom(xPos - 1, yPos + 0)))
@@ -86,7 +86,7 @@ namespace TriviaMaze
             return false;
         }
 
-        private bool canGo(int x, int y, bool moveHorizontal)
+        private bool canGo(int x, int y, bool moveHorizontal, bool moveLeft, bool moveUp)
         {
             if (x >= mazeCheck.GetLength(0) || y >= mazeCheck.GetLength(1) || x < 0 || y < 0)
                 return false;
@@ -98,13 +98,43 @@ namespace TriviaMaze
                 return false;
 
             if (moveHorizontal && x > 0)
-                if (maze.isHDoorLocked(x - 1, y))
-                    return false;
+            {
+                //Console.WriteLine("Check Horizontal");
 
-            if(!moveHorizontal && y > 0)
-                if (maze.isVDoorLocked(x, y - 1))
-                     return false;
+                if(!moveLeft)
+                    if (maze.isHDoorLocked(x - 1, y))
+                    {
+                        //Console.WriteLine("Door Locked");
+                        return false;
+                    }
+                if(moveLeft)
+                    if (maze.isHDoorLocked(x, y))
+                    {
+                        //Console.WriteLine("Door Locked");
+                        return false;
+                    }
+                
 
+            }
+
+            if (!moveHorizontal && y > 0)
+            {
+                //Console.WriteLine("Check Verticle");
+                if(!moveUp)
+                    if (maze.isVDoorLocked(x, y - 1))
+                    {
+                       //Console.WriteLine("Door Locked");
+                        return false;
+                    }
+
+                if(moveUp)
+                    if (maze.isVDoorLocked(x, y))
+                    {
+                        //Console.WriteLine("Door Locked");
+                        return false;
+                    }
+
+            }
             return true;
         }
 

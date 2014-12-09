@@ -71,6 +71,8 @@ namespace TriviaMaze
                 Console.WriteLine("Would you like to play again?(Y/N)");
                 str = Console.ReadLine().ToUpper();
 
+                isLoaded = false;
+
                 if (str.Equals("N"))
                     play = false;
             }
