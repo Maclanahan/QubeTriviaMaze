@@ -49,7 +49,7 @@ namespace TriviaMaze
 
             mazeCheck[xPos, yPos] = true;
 
-            printMazeCheck();
+            //printMazeCheck();
 
             if (tracker.isEndRoom())
                 return true;

@@ -8,7 +8,7 @@ namespace TriviaMaze
 {
     class Program
     {
-        private const int _size = 3;
+        private const int _size = 4;
 
         static void Main(string[] args)
         {
