@@ -67,6 +67,14 @@ namespace TriviaMaze
             return " ";
         }
 
+        public bool isDoorLocked()
+        {
+            if (_state == 2)
+                return true;
+
+            return false;
+        }
+
         public Door(SerializationInfo info, StreamingContext ctxt)
         {
             this._state = (int)info.GetValue("state", typeof(int));

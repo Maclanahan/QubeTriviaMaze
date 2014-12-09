@@ -33,6 +33,8 @@ namespace TriviaMaze
 
             currentRoom = maze.getCurrentRoom(_xpos, _ypos);
 
+            Solvable solver = new Solvable(_size);
+
             while(!maze.isFinalRoom(currentRoom.getXpos(), currentRoom.getYpos() ) && play )
             {
                 maze.PrintMaze(currentRoom);
@@ -40,6 +42,12 @@ namespace TriviaMaze
                     "Enter 1(Up), 2(Right), 3(Down), 4(Left), 9(Quit), 0(Save)");
 
                 play = playerAct(maze);
+                if (solver.checkIfMazeIsSolvable(maze, currentRoom) == false)
+                {
+                    Console.WriteLine("Unsolvable");
+                    break;
+                }
+
             }
 
             if (currentRoom.getXpos() == _endXPos && currentRoom.getYpos() == _endYPos)

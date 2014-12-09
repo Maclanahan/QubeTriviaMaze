@@ -114,6 +114,16 @@ namespace TriviaMaze
             return " ";
         }
 
+        public bool isHDoorLocked(int x, int y)
+        {
+            return xDoors[x, y].isDoorLocked();
+        }
+
+        public bool isVDoorLocked(int x, int y)
+        {
+            return yDoors[x, y].isDoorLocked();
+        }
+
         public Maze(SerializationInfo info, StreamingContext ctxt)
         {
             this.rooms = (Room[,])info.GetValue("rooms", typeof(Room[,]));
