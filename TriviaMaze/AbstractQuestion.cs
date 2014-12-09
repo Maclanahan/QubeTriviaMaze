@@ -40,8 +40,18 @@ namespace TriviaMaze
 
         protected Boolean readInAnswer()
         {
-            string ans = Console.ReadLine();
+            bool cheating = true;
+            string ans = "";
 
+            while (cheating)
+            {
+                ans = Console.ReadLine();
+
+                if (ans.Equals("cheat"))
+                    Console.WriteLine("Answer: " + sAnswer);
+                else
+                    cheating = false;
+            }
             return checkAnswer(ans);
         }
 

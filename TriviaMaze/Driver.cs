@@ -36,13 +36,10 @@ namespace TriviaMaze
             while(!maze.isFinalRoom(currentRoom.getXpos(), currentRoom.getYpos() ) && play )
             {
                 maze.PrintMaze(currentRoom);
-                Console.WriteLine("You are in room: x-" + currentRoom.getXpos() + " y-" + currentRoom.getYpos() + 
-                    "\nWhere would you like to go?" +
-                    "\nThe end is at x-" + _endXPos + " y-" + _endYPos + 
-                    "\nEnter 1(Up), 2(Right), 3(Down), 4(Left), 9(Quit), 0(Save)");
+                Console.WriteLine("Where would you like to go?\n" +
+                    "Enter 1(Up), 2(Right), 3(Down), 4(Left), 9(Quit), 0(Save)");
 
                 play = playerAct(maze);
-
             }
 
             if (currentRoom.getXpos() == _endXPos && currentRoom.getYpos() == _endYPos)
@@ -121,7 +118,7 @@ namespace TriviaMaze
                             }   
                         }
                     }
-                    catch (Exception)
+                    catch
                     {
                         Console.WriteLine("Input was not valid.");
                     }

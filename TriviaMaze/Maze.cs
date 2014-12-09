@@ -79,7 +79,7 @@ namespace TriviaMaze
             {
                 for (int j = 0; j < rooms.GetLength(1); j++)
                 {
-                    Console.Write("[" + checkIfPlayerRoom(playerRoom, rooms[j,i]) + "]");
+                    Console.Write("[" + checkRoom(playerRoom, rooms[j,i]) + "]");
 
                     Console.Write(checkDoorState(j, i, xDoors));
                 }
@@ -102,12 +102,14 @@ namespace TriviaMaze
             return "";
         }
 
-        private string checkIfPlayerRoom(Room playerRoom, Room cur)
+        private string checkRoom(Room playerRoom, Room cur)
         {
             //Console.WriteLine(playerRoom.getXpos() + " " cur.getXpos() + " " + playerRoom.getYpos() + " " + playerRoom.getYpos());
 
             if (playerRoom.getXpos() == cur.getXpos() && playerRoom.getYpos() == cur.getYpos())
                 return "P";
+            else if (finalRoom.getXpos() - 1 == cur.getXpos() && finalRoom.getYpos() - 1 == cur.getYpos())
+                return "G";
 
             return " ";
         }

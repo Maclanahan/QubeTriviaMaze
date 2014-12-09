@@ -20,7 +20,6 @@ namespace TriviaMaze
             Console.WriteLine("2: F");
 
             Console.WriteLine("Answer by typing 1 or 2.");
-            Console.WriteLine("Answer: " + sAnswer);
         }
 
         public TrueFalseQuestion(SerializationInfo info, StreamingContext ctxt)
