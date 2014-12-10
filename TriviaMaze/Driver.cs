@@ -134,7 +134,7 @@ namespace TriviaMaze
                                 int x = int.Parse(input.Substring(0, 1));
                                 int y = int.Parse(input.Substring(2, 1));
 
-                                if (x < _size && y < _size)
+                                if (x < _size && y < _size && x > 0 && y > 0)
                                     currentRoom = new Room(x, y, _endXPos, _endYPos);
 
                                 else
