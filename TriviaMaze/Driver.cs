@@ -131,7 +131,14 @@ namespace TriviaMaze
                             else if (int.Parse(input.Substring(0, 1)) < xDoors.Length && int.Parse(input.Substring(0, 1)) >= 0 &&
                                     int.Parse(input.Substring(2, 1)) < yDoors.Length && int.Parse(input.Substring(2, 1)) >= 0)
                             {
-                                currentRoom = new Room(int.Parse(input.Substring(0, 1)), int.Parse(input.Substring(2, 1)), _endXPos, _endYPos);
+                                int x = int.Parse(input.Substring(0, 1));
+                                int y = int.Parse(input.Substring(2, 1));
+
+                                if (x < _size && y < _size)
+                                    currentRoom = new Room(x, y, _endXPos, _endYPos);
+
+                                else
+                                    Console.WriteLine("Invalid Cheat");
                             }
                         }
                     }
@@ -184,7 +191,7 @@ namespace TriviaMaze
 #region Serializable
         private void saveGame(Maze other_maze)
         {
-            SaveData save = new SaveData(other_maze, currentRoom);
+            SaveData save = new SaveData(other_maze, currentRoom, _size);
 
             Serializer serializer = new Serializer();
             serializer.Serialize("output.txt", save);

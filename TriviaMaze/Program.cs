@@ -50,7 +50,12 @@ namespace TriviaMaze
 #region Main Behavior
         private static void playGame(bool other_isLoaded)
         {
-            int size = askForMazeSize();
+            int size = 4;
+
+            if (!other_isLoaded)
+                size = askForMazeSize();
+            else
+                size = loadSize();
 
             Driver driver;
             
@@ -123,9 +128,16 @@ namespace TriviaMaze
             Serializer serializer = new Serializer();
             SaveData load = serializer.Deserialize("output.txt");
 
-            //load.getMaze()
             other_driver.setCurrentRoom(load.getPosition());
             other_driver.enterMaze(load.getMaze());
+        }
+
+        private static int loadSize()
+        {
+            Serializer serializer = new Serializer();
+            SaveData load = serializer.Deserialize("output.txt");
+
+            return load.getSize();
         }
 #endregion
 

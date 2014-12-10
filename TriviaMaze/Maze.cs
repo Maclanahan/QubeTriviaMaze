@@ -19,6 +19,7 @@ namespace TriviaMaze
         private Room[,] _rooms;
         private Door[,] _xDoors;
         private Door[,] _yDoors;
+        private int _size;
 
         private Room finalRoom;
 
@@ -46,6 +47,11 @@ namespace TriviaMaze
         public Room getCurrentRoom(int other_x, int other_y)
         {
             return _rooms[other_x, other_y];
+        }
+
+        internal int getSize()
+        {
+            return _size;
         }
 #endregion
 
@@ -141,6 +147,7 @@ namespace TriviaMaze
             this._xDoors = (Door[,])other_info.GetValue("_xDoors", typeof(Door[,]));
             this._yDoors = (Door[,])other_info.GetValue("_yDoors", typeof(Door[,]));
             this.finalRoom = (Room)other_info.GetValue("finalRoom", typeof(Room));
+            this._size = (int)other_info.GetValue("_size", typeof(int));
         }
 
         public void GetObjectData(SerializationInfo other_info, StreamingContext other_ctxt)
@@ -149,6 +156,7 @@ namespace TriviaMaze
             other_info.AddValue("_xDoors", this._xDoors);
             other_info.AddValue("_yDoors", this._yDoors);
             other_info.AddValue("finalRoom", this.finalRoom);
+            other_info.AddValue("_size", this._size);
         }
 #endregion
 

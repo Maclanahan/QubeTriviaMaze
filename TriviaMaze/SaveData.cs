@@ -19,15 +19,17 @@ namespace TriviaMaze
     {
         private Maze _maze;
         private Room _position;
+        int _size;
 
 
-        public SaveData(Maze other_maze, Room other_position)
+        public SaveData(Maze other_maze, Room other_position, int other_size)
         {
-            if (other_maze == null || other_position == null)
+            if (other_maze == null || other_position == null || other_size <= 0)
                 throw new NullReferenceException();
 
             _maze = other_maze;
             _position = other_position;
+            _size = other_size;
         }
 
 #region Accessors / Mutators
@@ -40,6 +42,12 @@ namespace TriviaMaze
         {
             return _position;
         }
+
+        public int getSize()
+        {
+            return _size;
+        }
+
 #endregion
 
 #region Serializable
@@ -47,12 +55,14 @@ namespace TriviaMaze
         {
             this._maze = (Maze)other_info.GetValue("Maze", typeof(Maze));
             this._position = (Room)other_info.GetValue("position", typeof(Room));
+            this._size = (int)other_info.GetValue("size", typeof(int));
         }
 
         public void GetObjectData(SerializationInfo other_info, StreamingContext other_ctxt)
         {
             other_info.AddValue("Maze", _maze);
             other_info.AddValue("position", _position);
+            other_info.AddValue("size", _size);
         }
 #endregion
 

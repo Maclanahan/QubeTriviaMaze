@@ -93,8 +93,8 @@ namespace TriviaMaze
 
         public AbstractQuestion(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            this._sQuest = (string)other_info.GetValue("_sQuest", typeof(string));
-            this._sAnswer = (string)other_info.GetValue("_sAnswer", typeof(string));
+            this._sQuest = (string)other_info.GetValue("sQuest", typeof(string));
+            this._sAnswer = (string)other_info.GetValue("sAnswer", typeof(string));
             
         }
 
