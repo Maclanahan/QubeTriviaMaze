@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,71 +13,73 @@ namespace TriviaMaze
 {
     class Solvable
     {
-        Maze maze;
+        protected Maze _maze;
 
-        bool [,] mazeCheck;
+        protected bool [,] _mazeCheck;
 
-        Room tracker;
+        protected Room _tracker;
 
-        public Solvable(int _size)
+        public Solvable(int other_size)
         {
-            //maze = _maze;
-
-            mazeCheck = new bool[_size, _size];
+            _mazeCheck = new bool[other_size, other_size];
 
             resetMazeCheck();
         }
 
+#region Main Behaviors
         private void resetMazeCheck()
         {
-            for(int i = 0; i < mazeCheck.GetLength(0); i++)
-                for (int j = 0; j < mazeCheck.GetLength(1); j++)
+            for(int i = 0; i < _mazeCheck.GetLength(0); i++)
+                for (int j = 0; j < _mazeCheck.GetLength(1); j++)
                 {
-                    mazeCheck[i,j] = false;
-                }
+                    _mazeCheck[i,j] = false;
+                }//end for loop
         }
 
-        public bool checkIfMazeIsSolvable(Maze _maze, Room currentRoom)
+        public bool checkIfMazeIsSolvable(Maze other_maze, Room other_currentRoom)
         {
-            maze = _maze;
+            _maze = other_maze;
 
             resetMazeCheck();
 
-            return checkIfMazeIsSolvableRec(currentRoom);
+            return checkIfMazeIsSolvableRec(other_currentRoom);
         }
 
-        public bool checkIfMazeIsSolvableRec(Room currentRoom)
+        public bool checkIfMazeIsSolvableRec(Room other_currentRoom)
         {
-            tracker = currentRoom;
+            _tracker = other_currentRoom;
 
-            int xPos = tracker.getXpos();
-            int yPos = tracker.getYpos();
+            int xPos = _tracker.getXpos();
+            int yPos = _tracker.getYpos();
 
-            mazeCheck[xPos, yPos] = true;
+            _mazeCheck[xPos, yPos] = true;
 
             //printMazeCheck();
 
-            if (tracker.isEndRoom())
+            if (_tracker.isEndRoom())
                 return true;
+
             //down
             if (canGo(xPos + 0, yPos + 1, false, false, false))
             {
                 //tracker = maze.getCurrentRoom(xPos + 0, yPos + 1);
-                if (checkIfMazeIsSolvableRec(maze.getCurrentRoom(xPos + 0, yPos + 1)))
+                if (checkIfMazeIsSolvableRec(_maze.getCurrentRoom(xPos + 0, yPos + 1)))
                     return true;
             }
+
             //right
             if (canGo(xPos + 1, yPos + 0, true, false, false))
             {
                 //tracker = maze.getCurrentRoom(xPos + 1, yPos + 0);
-                if (checkIfMazeIsSolvableRec(maze.getCurrentRoom(xPos + 1, yPos + 0)))
+                if (checkIfMazeIsSolvableRec(_maze.getCurrentRoom(xPos + 1, yPos + 0)))
                     return true;    
             }
+
             //up
             if (canGo(xPos + 0, yPos - 1, false, false, true))
             {
                 //tracker = maze.getCurrentRoom(xPos + 0, yPos - 1);
-                if (checkIfMazeIsSolvableRec(maze.getCurrentRoom(xPos + 0, yPos - 1)))
+                if (checkIfMazeIsSolvableRec(_maze.getCurrentRoom(xPos + 0, yPos - 1)))
                     return true;
             }
 
@@ -79,83 +87,75 @@ namespace TriviaMaze
             if (canGo(xPos - 1, yPos + 0, true, true, false))
             {
                 //tracker = maze.getCurrentRoom(xPos - 1, yPos + 0);
-                if (checkIfMazeIsSolvableRec(maze.getCurrentRoom(xPos - 1, yPos + 0)))
+                if (checkIfMazeIsSolvableRec(_maze.getCurrentRoom(xPos - 1, yPos + 0)))
                     return true;
             }
 
             return false;
         }
 
-        private bool canGo(int x, int y, bool moveHorizontal, bool moveLeft, bool moveUp)
+        private bool canGo(int other_x, int other_y, bool other_moveHorizontal, bool other_moveLeft, bool other_moveUp)
         {
-            if (x >= mazeCheck.GetLength(0) || y >= mazeCheck.GetLength(1) || x < 0 || y < 0)
+            if (other_x >= _mazeCheck.GetLength(0) || other_y >= _mazeCheck.GetLength(1) || other_x < 0 || other_y < 0)
                 return false;
 
-            //Console.WriteLine(x + " " + mazeCheck.GetLength(0));
-            //Console.WriteLine(y + " " + mazeCheck.GetLength(1));
-
-            if (mazeCheck[x, y] == true)
+            if (_mazeCheck[other_x, other_y] == true)
                 return false;
 
-            if (moveHorizontal && x > 0)
+            if (other_moveHorizontal && other_x > 0)
             {
-                //Console.WriteLine("Check Horizontal");
-
-                if(!moveLeft)
-                    if (maze.isHDoorLocked(x - 1, y))
+                if (!other_moveLeft)
+                    if (_maze.isHDoorLocked(other_x - 1, other_y))
                     {
-                        //Console.WriteLine("Door Locked");
                         return false;
                     }
-                if(moveLeft)
-                    if (maze.isHDoorLocked(x, y))
+
+                if (other_moveLeft)
+                    if (_maze.isHDoorLocked(other_x, other_y))
                     {
-                        //Console.WriteLine("Door Locked");
                         return false;
                     }
-                
-
             }
 
-            if (!moveHorizontal && y > 0)
+            if (!other_moveHorizontal && other_y > 0)
             {
-                //Console.WriteLine("Check Verticle");
-                if(!moveUp)
-                    if (maze.isVDoorLocked(x, y - 1))
+                if (!other_moveUp)
+                    if (_maze.isVDoorLocked(other_x, other_y - 1))
                     {
-                       //Console.WriteLine("Door Locked");
                         return false;
                     }
 
-                if(moveUp)
-                    if (maze.isVDoorLocked(x, y))
+                if (other_moveUp)
+                    if (_maze.isVDoorLocked(other_x, other_y))
                     {
-                        //Console.WriteLine("Door Locked");
                         return false;
                     }
-
             }
+
             return true;
         }
+#endregion
 
+#region Printing
         private void printMazeCheck()
         {
-            for (int i = 0; i < mazeCheck.GetLength(0); i++)
+            for (int i = 0; i < _mazeCheck.GetLength(0); i++)
             {
-                for (int j = 0; j < mazeCheck.GetLength(1); j++)
+                for (int j = 0; j < _mazeCheck.GetLength(1); j++)
                 {
-                    if(mazeCheck[j,i] == true)
+                    if(_mazeCheck[j,i] == true)
                         Console.Write("1 ");
                     else
                         Console.Write("0 ");   
 
-                }
+                }//end for loop
 
                 Console.WriteLine();
-            }
+            }//end for loop
 
             Console.WriteLine();
         }
+#endregion
 
     }
 }

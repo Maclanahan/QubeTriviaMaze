@@ -1,3 +1,9 @@
+//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,39 +20,51 @@ namespace TriviaMaze
         private int _ypos;
         private bool _endRoom = false;
 
-        public int getXpos() { return _xpos; }
-        public int getYpos() { return _ypos; }
-
-        public Room(int xpos, int ypos, int endxpos, int endypos)
+        public Room(int other_xpos, int other_ypos, int other_endxpos, int other_endypos)
         {
-            if (xpos < 0 || ypos < 0 ||
-                endxpos < 0 || endypos < 0)
+            if (other_xpos < 0 || other_ypos < 0 ||
+                other_endxpos < 0 || other_endypos < 0)
                 throw new ArgumentOutOfRangeException();
 
-            _xpos = xpos;
-            _ypos = ypos;
+            _xpos = other_xpos;
+            _ypos = other_ypos;
 
-            if (_xpos == endxpos && _ypos == endypos)
+            if (_xpos == other_endxpos && _ypos == other_endypos)
                 _endRoom = true;
         }
+
+#region Accessors / Mutators
+        public int getXpos() 
+        { 
+            return _xpos; 
+        }
+
+        public int getYpos() 
+        { 
+            return _ypos; 
+        }
+#endregion
 
         public bool isEndRoom()
         {
             return _endRoom;
         }
 
-        public Room(SerializationInfo info, StreamingContext ctxt)
+#region Serializable
+        public Room(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            this._xpos = (int)info.GetValue("xpos", typeof(int));
-            this._ypos = (int)info.GetValue("ypos", typeof(int));
-            this._endRoom = (bool)info.GetValue("endRoom", typeof(bool));
+            this._xpos = (int)other_info.GetValue("xpos", typeof(int));
+            this._ypos = (int)other_info.GetValue("ypos", typeof(int));
+            this._endRoom = (bool)other_info.GetValue("endRoom", typeof(bool));
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        public void GetObjectData(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            info.AddValue("xpos", this._xpos);
-            info.AddValue("ypos", this._ypos);
-            info.AddValue("endRoom", this._endRoom);
+            other_info.AddValue("xpos", this._xpos);
+            other_info.AddValue("ypos", this._ypos);
+            other_info.AddValue("endRoom", this._endRoom);
         }
+#endregion
+
     }
 }

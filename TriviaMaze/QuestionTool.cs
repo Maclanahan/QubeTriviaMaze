@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

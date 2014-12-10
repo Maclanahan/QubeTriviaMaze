@@ -1,3 +1,9 @@
+//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +19,16 @@ namespace TriviaMaze
         private int _state; // 0 = open, 1 = closed, 2 = locked
         private AbstractQuestion _question;
 
-        public Door(AbstractQuestion question)
+        public Door(AbstractQuestion other_question)
         {
-            if (question == null)
+            if (other_question == null)
                 throw new NullReferenceException();
 
             _state = 1;
-            _question = question;
+            _question = other_question;
         }
 
+#region Accessors / Mutators
         public int State
         {
             get
@@ -34,6 +41,20 @@ namespace TriviaMaze
             }
         }
 
+        public string getState()
+        {
+            if (_state == 0)
+                return "=";
+            if (_state == 1)
+                return "/";
+            if (_state == 2)
+                return "x";
+
+            return " ";
+        }
+#endregion
+
+#region Check Methods
         public bool isDoorOpen()
         {
             // return false if locked
@@ -58,18 +79,6 @@ namespace TriviaMaze
             //return isDoorOpen(); //return true if answered correctly
         }
 
-        public string getState()
-        {
-            if (_state == 0)
-                return "=";
-            if (_state == 1)
-                return "/";
-            if (_state == 2)
-                return "x";
-
-            return " ";
-        }
-
         public bool isDoorLocked()
         {
             if (_state == 2)
@@ -77,18 +86,22 @@ namespace TriviaMaze
 
             return false;
         }
+#endregion
 
-        public Door(SerializationInfo info, StreamingContext ctxt)
+#region Serializable
+        public Door(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            this._state = (int)info.GetValue("state", typeof(int));
-            this._question = (AbstractQuestion)info.GetValue("question", typeof(AbstractQuestion));
+            this._state = (int)other_info.GetValue("state", typeof(int));
+            this._question = (AbstractQuestion)other_info.GetValue("question", typeof(AbstractQuestion));
             
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        public void GetObjectData(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            info.AddValue("state", this._state);
-            info.AddValue("question", this._question);
+            other_info.AddValue("state", this._state);
+            other_info.AddValue("question", this._question);
         }
+#endregion
+
     }
 }

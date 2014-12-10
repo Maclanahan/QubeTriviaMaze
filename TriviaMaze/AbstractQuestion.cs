@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,19 +17,30 @@ namespace TriviaMaze
     [Serializable()]
     public abstract class AbstractQuestion : ISerializable
     {
-        protected string sQuest;
-        protected string sAnswer;
+        protected string _sQuest;
+        protected string _sAnswer;
         //protected List<String> sChoices;
 
 
-        public AbstractQuestion(string quest, string answer)
+        public AbstractQuestion(string other_quest, string other_answer)
         {
-            sQuest = quest;
-            sAnswer = answer;
-            //sChoices = choices;
-
+            _sQuest = other_quest;
+            _sAnswer = other_answer;
         }
 
+#region Accessors / Mutators
+        public string Question 
+        { 
+            get { return this._sQuest; } 
+        }
+
+        public string Answer 
+        { 
+            get { return this._sAnswer; } 
+        }
+#endregion
+
+#region Main Behaviors
         public bool knock()
         {
             askQuestion();
@@ -33,7 +50,7 @@ namespace TriviaMaze
 
         protected void askQuestion()
         {
-            Console.WriteLine(sQuest);
+            Console.WriteLine(_sQuest);
         }
 
         abstract protected void displayChoices();
@@ -48,16 +65,16 @@ namespace TriviaMaze
                 ans = Console.ReadLine();
 
                 if (ans.Equals("cheat"))
-                    Console.WriteLine("Answer: " + sAnswer);
+                    Console.WriteLine("Answer: " + _sAnswer);
                 else
                     cheating = false;
             }
             return checkAnswer(ans);
         }
 
-        protected Boolean checkAnswer(string ans)
+        protected Boolean checkAnswer(string other_ans)
         {
-            if (ans.ToLower().Equals(sAnswer.ToLower()))
+            if (other_ans.ToLower().Equals(_sAnswer.ToLower()))
             {
                 Console.WriteLine("CORRECT!");
                 return true;
@@ -72,25 +89,17 @@ namespace TriviaMaze
             askQuestion();
 
             displayChoices();
-
         }
 
-        public AbstractQuestion(SerializationInfo info, StreamingContext ctxt)
+        public AbstractQuestion(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            this.sQuest = (string)info.GetValue("sQuest", typeof(string));
-            this.sAnswer = (string)info.GetValue("sAnswer", typeof(string));
+            this._sQuest = (string)other_info.GetValue("_sQuest", typeof(string));
+            this._sAnswer = (string)other_info.GetValue("_sAnswer", typeof(string));
             
         }
 
-        abstract public void GetObjectData(SerializationInfo info, StreamingContext ctxt);
+        abstract public void GetObjectData(SerializationInfo other_info, StreamingContext other_ctxt);
+#endregion
 
-        public string Question{ get { return this.sQuest; } }
-        public string Answer { get { return this.sAnswer; } }
-
-        //public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
-        //{
-        //    info.AddValue("sQuest", this.sQuest);
-        //    info.AddValue("sAnswer", this.sAnswer);
-        //}
     }
 }

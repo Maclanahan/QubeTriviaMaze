@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,39 +17,44 @@ namespace TriviaMaze
     [Serializable()]
     public class SaveData :ISerializable
     {
-        private Maze maze;
-        private Room position;
+        private Maze _maze;
+        private Room _position;
 
 
-        public SaveData(Maze _maze, Room _position)
+        public SaveData(Maze other_maze, Room other_position)
         {
-            if (_maze == null || _position == null)
+            if (other_maze == null || other_position == null)
                 throw new NullReferenceException();
 
-            maze = _maze;
-            position = _position;
+            _maze = other_maze;
+            _position = other_position;
         }
 
+#region Accessors / Mutators
         public Maze getMaze()
         {
-            return maze;
+            return _maze;
         }
 
         public Room getPosition()
         {
-            return position;
+            return _position;
+        }
+#endregion
+
+#region Serializable
+        public SaveData(SerializationInfo other_info, StreamingContext other_ctxt)
+        {
+            this._maze = (Maze)other_info.GetValue("Maze", typeof(Maze));
+            this._position = (Room)other_info.GetValue("position", typeof(Room));
         }
 
-        public SaveData(SerializationInfo info, StreamingContext ctxt)
+        public void GetObjectData(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            this.maze = (Maze)info.GetValue("Maze", typeof(Maze));
-            this.position = (Room)info.GetValue("position", typeof(Room));
+            other_info.AddValue("Maze", _maze);
+            other_info.AddValue("position", _position);
         }
+#endregion
 
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
-        {
-            info.AddValue("Maze", this.maze);
-            info.AddValue("position", this.position);
-        }
     }
 }

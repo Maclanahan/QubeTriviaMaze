@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,41 +21,42 @@ namespace TriviaMaze
 
         private Room currentRoom;
 
-        public Driver(int xpos, int ypos, int endXPos, int endYPos, int size)
+        public Driver(int other_xpos, int other_ypos, int other_endXPos, int other_endYPos, int other_size)
         {
-            if (xpos < 0 || xpos >= size || 
-                ypos < 0 || xpos >= size || 
-                endXPos < 0 || endXPos >= size ||
-                endYPos < 0 || endYPos >= size ||
-                size < 0)
+            if (other_xpos < 0 || other_xpos >= other_size ||
+                other_ypos < 0 || other_xpos >= other_size ||
+                other_endXPos < 0 || other_endXPos >= other_size ||
+                other_endYPos < 0 || other_endYPos >= other_size ||
+                other_size < 0)
                 throw new ArgumentOutOfRangeException();
 
-            _xpos = xpos;
-            _ypos = ypos;
-            _endXPos = endXPos;
-            _endYPos = endYPos;
-            _size = size;
-            currentRoom = new Room(0, 0, endXPos, endYPos);
+            _xpos = other_xpos;
+            _ypos = other_ypos;
+            _endXPos = other_endXPos;
+            _endYPos = other_endYPos;
+            _size = other_size;
+            currentRoom = new Room(0, 0, other_endXPos, other_endYPos);
         }
 
-        public void enterMaze(Maze maze)
+#region Main Behaviors
+        public void enterMaze(Maze other_maze)
         {   
             bool play = true;
             _xpos = currentRoom.getXpos();
             _ypos = currentRoom.getYpos();
 
-            currentRoom = maze.getCurrentRoom(_xpos, _ypos);
+            currentRoom = other_maze.getCurrentRoom(_xpos, _ypos);
 
             Solvable solver = new Solvable(_size);
 
-            while(!maze.isFinalRoom(currentRoom.getXpos(), currentRoom.getYpos() ) && play )
+            while (!other_maze.isFinalRoom(currentRoom.getXpos(), currentRoom.getYpos()) && play)
             {
-                maze.PrintMaze(currentRoom);
+                other_maze.PrintMaze(currentRoom);
                 Console.WriteLine("Where would you like to go?\n" +
                     "Enter 1(Up), 2(Right), 3(Down), 4(Left), 9(Quit), 0(Save)");
 
-                play = playerAct(maze);
-                if (solver.checkIfMazeIsSolvable(maze, currentRoom) == false)
+                play = playerAct(other_maze);
+                if (solver.checkIfMazeIsSolvable(other_maze, currentRoom) == false)
                 {
                     Console.WriteLine("Unsolvable");
                     break;
@@ -62,32 +69,24 @@ namespace TriviaMaze
 
         }
 
-        public void setCurrentRoom(Room current)
-        {
-            if (current == null)
-                throw new NullReferenceException();
-
-            currentRoom = current;
-        }
-
-        private bool playerAct(Maze maze)
+        private bool playerAct(Maze other_maze)
         {
             string input = Console.ReadLine();
 
             if (input != "")
             {
                 if ((input.Equals("1") || input.ToLower().Equals("up") || input.ToLower().Equals("u")) && currentRoom.getYpos() != 0)
-                    this.moveUp(maze);
+                    this.moveUp(other_maze);
                 else if ((input.Equals("2") || input.ToLower().Equals("right") || input.ToLower().Equals("r")) && currentRoom.getXpos() != _size - 1)
-                    this.moveRight(maze);
+                    this.moveRight(other_maze);
                 else if ((input.Equals("3") || input.ToLower().Equals("down") || input.ToLower().Equals("d")) && currentRoom.getYpos() != _size - 1)
-                    this.moveDown(maze);
+                    this.moveDown(other_maze);
                 else if ((input.Equals("4") || input.ToLower().Equals("left") || input.ToLower().Equals("l")) && currentRoom.getXpos() != 0)
-                    this.moveLeft(maze);
+                    this.moveLeft(other_maze);
                 else if (input.Equals("9") || input.ToLower().Equals("quit") || input.ToLower().Equals("q"))
                     return false;
                 else if (input.Equals("0") || input.ToLower().Equals("save") || input.ToLower().Equals("s"))
-                    saveGame(maze);
+                    saveGame(other_maze);
                 else if (input.ToLower().Equals("cheat") || input.ToLower().Equals("cheat help"))
                     Console.WriteLine("Cheats:\n" +
                                         "Teleport(move to rooms coordinates): cheat 1,1/c 2,1 \n" +
@@ -105,35 +104,35 @@ namespace TriviaMaze
 
                         if (cheatLength != 0)
                         {
-                            Door[,] xDoors = maze.getDoors("x");
-                            Door[,] yDoors = maze.getDoors("y");
+                            Door[,] xDoors = other_maze.getDoors("x");
+                            Door[,] yDoors = other_maze.getDoors("y");
                             input = input.Substring(cheatLength, input.Length - cheatLength).ToLower();
 
                             if ((input.Equals("1") || input.Equals("up") || input.Equals("u")) && currentRoom.getYpos() != 0)
                             {
                                 yDoors[currentRoom.getXpos(), currentRoom.getYpos() - 1].State = 0;
-                                this.moveUp(maze);
+                                this.moveUp(other_maze);
                             }
                             else if ((input.Equals("2") || input.Equals("right") || input.Equals("r")) && currentRoom.getXpos() != _size - 1)
                             {
                                 xDoors[currentRoom.getXpos(), currentRoom.getYpos()].State = 0;
-                                this.moveRight(maze);
+                                this.moveRight(other_maze);
                             }
                             else if ((input.Equals("3") || input.Equals("down") || input.Equals("d")) && currentRoom.getYpos() != _size - 1)
                             {
                                 yDoors[currentRoom.getXpos(), currentRoom.getYpos()].State = 0;
-                                this.moveDown(maze);
+                                this.moveDown(other_maze);
                             }
                             else if ((input.Equals("4") || input.Equals("left") || input.Equals("l")) && currentRoom.getXpos() != 0)
                             {
                                 xDoors[currentRoom.getXpos() - 1, currentRoom.getYpos()].State = 0;
-                                this.moveLeft(maze);
+                                this.moveLeft(other_maze);
                             }
                             else if (int.Parse(input.Substring(0, 1)) < xDoors.Length && int.Parse(input.Substring(0, 1)) >= 0 &&
-                                    int.Parse(input.Substring(2, 1)) < yDoors.Length && int.Parse(input.Substring(2,1)) >= 0)
+                                    int.Parse(input.Substring(2, 1)) < yDoors.Length && int.Parse(input.Substring(2, 1)) >= 0)
                             {
                                 currentRoom = new Room(int.Parse(input.Substring(0, 1)), int.Parse(input.Substring(2, 1)), _endXPos, _endYPos);
-                            }   
+                            }
                         }
                     }
                     catch
@@ -146,36 +145,51 @@ namespace TriviaMaze
             return true;
         }
 
-        private void moveUp(Maze maze)
+        private void moveUp(Maze other_maze)
         {
             _ypos -= 1;
-            currentRoom = maze.Move(currentRoom, 0, -1);
+            currentRoom = other_maze.Move(currentRoom, 0, -1);
         }
 
-        private void moveRight(Maze maze)
+        private void moveRight(Maze other_maze)
         {
             _xpos += 1;
-            currentRoom = maze.Move(currentRoom, 1, 0);
+            currentRoom = other_maze.Move(currentRoom, 1, 0);
         }
 
-        private void moveDown(Maze maze)
+        private void moveDown(Maze other_maze)
         {
             _ypos += 1;
-            currentRoom = maze.Move(currentRoom, 0, 1);
+            currentRoom = other_maze.Move(currentRoom, 0, 1);
         }
 
-        private void moveLeft(Maze maze)
+        private void moveLeft(Maze other_maze)
         {
             _xpos -= 1;
-            currentRoom = maze.Move(currentRoom, -1, 0);
+            currentRoom = other_maze.Move(currentRoom, -1, 0);
         }
 
-        private void saveGame(Maze maze)
+#endregion
+
+#region Accessors/Mutators
+        public void setCurrentRoom(Room other_current)
         {
-            SaveData save = new SaveData(maze, currentRoom);
+            if (other_current == null)
+                throw new NullReferenceException();
+
+            currentRoom = other_current;
+        }
+#endregion
+
+#region Serializable
+        private void saveGame(Maze other_maze)
+        {
+            SaveData save = new SaveData(other_maze, currentRoom);
 
             Serializer serializer = new Serializer();
             serializer.Serialize("output.txt", save);
         }
+#endregion
+
     }
 }

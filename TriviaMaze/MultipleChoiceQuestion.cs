@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,43 +16,44 @@ namespace TriviaMaze
     [Serializable()]
     public class MultipleChoiceQuestion : AbstractQuestion
     {
-        protected List<string> sChoices;
+        protected List<string> _sChoices;
 
-        public MultipleChoiceQuestion(string quest, string answer, List<string> choices)
-            : base(quest, answer)
+#region Class Code
+        public MultipleChoiceQuestion(string other_quest, string other_answer, List<string> other_choices)
+            : base(other_quest, other_answer)
         {
-            if (quest == null || answer == null || choices == null)
+            if (other_quest == null || other_answer == null || other_choices == null)
                 throw new NullReferenceException();
 
-            sChoices = choices;
+            _sChoices = other_choices;
         }
 
         override protected void displayChoices()
         {
-            for (int i = 0; i < sChoices.Count; i++)
+            for (int i = 0; i < _sChoices.Count; i++)
             {
                 int count = i + 1;
 
-                Console.WriteLine(count + ": " + sChoices[i]);
-            }
+                Console.WriteLine(count + ": " + _sChoices[i]);
+            }//end for loop
 
             Console.WriteLine("Answer by typing 1, 2, 3, or 4.");
-
         }
+#endregion
 
-        public MultipleChoiceQuestion(SerializationInfo info, StreamingContext ctxt)
-            : base(info, ctxt)
+#region Serializable
+        public MultipleChoiceQuestion(SerializationInfo other_info, StreamingContext other_ctxt)
+            : base(other_info, other_ctxt)
         {
-            this.sChoices = (List<string>)info.GetValue("sChoices", typeof(List<string>));
+            this._sChoices = (List<string>)other_info.GetValue("_sChoices", typeof(List<string>));
         }
 
-        override public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        override public void GetObjectData(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            info.AddValue("sChoices", this.sChoices);
-            //base.GetObjectData(info, ctxt);
-            info.AddValue("sQuest", this.sQuest);
-            info.AddValue("sAnswer", this.sAnswer);
+            other_info.AddValue("_sChoices", _sChoices);
+            other_info.AddValue("sQuest", _sQuest);
+            other_info.AddValue("sAnswer", _sAnswer);
         }
-
+#endregion
     }
 }

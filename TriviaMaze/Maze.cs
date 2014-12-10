@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,131 +16,141 @@ namespace TriviaMaze
     [Serializable()]
     public class Maze : ISerializable
     {
-        private Room[,] rooms;
-        private Door[,] xDoors;
-        private Door[,] yDoors;
+        private Room[,] _rooms;
+        private Door[,] _xDoors;
+        private Door[,] _yDoors;
 
         private Room finalRoom;
 
-        public Maze(Room[,] _rooms, Door[,] _xDoors, Door[,] _yDoors, int size)
+        public Maze(Room[,] other_rooms, Door[,] other_xDoors, Door[,] other_yDoors, int other_size)
         {
-            if (_rooms == null || _xDoors == null || _yDoors == null || size <= 0)
-                throw new Exception();
+            if (other_rooms == null || other_xDoors == null || other_yDoors == null || other_size <= 0)
+                throw new NullReferenceException();
 
-            rooms = _rooms;
-            xDoors = _xDoors;
-            yDoors = _yDoors;
+            _rooms = other_rooms;
+            _xDoors = other_xDoors;
+            _yDoors = other_yDoors;
 
-            finalRoom = new Room(size, size, size, size);
+            finalRoom = new Room(other_size, other_size, other_size, other_size);
         }
 
-        public Room Move(Room currentPos, int xDir, int yDir)
+#region Accesors/Mutators
+        public Door[,] getDoors(string other_doors)
         {
-            if (xDir != 0)
-            {
-                if (xDir == -1 && xDoors[currentPos.getXpos() + xDir, currentPos.getYpos()].isDoorOpen())
-                    return rooms[currentPos.getXpos() + xDir, currentPos.getYpos()];
+            if (other_doors.Equals("x"))
+                return _xDoors;
 
-                if(xDir == 1 && xDoors[currentPos.getXpos(), currentPos.getYpos()].isDoorOpen())
-                    return rooms[currentPos.getXpos() + xDir, currentPos.getYpos()];
+            return _yDoors;
+        }
+
+        public Room getCurrentRoom(int other_x, int other_y)
+        {
+            return _rooms[other_x, other_y];
+        }
+#endregion
+
+#region Main Behaviors
+        public Room Move(Room currentPos, int other_xDir, int other_yDir)
+        {
+            if (other_xDir != 0)
+            {
+                if (other_xDir == -1 && _xDoors[currentPos.getXpos() + other_xDir, currentPos.getYpos()].isDoorOpen())
+                    return _rooms[currentPos.getXpos() + other_xDir, currentPos.getYpos()];
+
+                if (other_xDir == 1 && _xDoors[currentPos.getXpos(), currentPos.getYpos()].isDoorOpen())
+                    return _rooms[currentPos.getXpos() + other_xDir, currentPos.getYpos()];
             }
 
-            else if (yDir != 0)
+            else if (other_yDir != 0)
             {
-                if (yDir == -1 && yDoors[currentPos.getXpos(), currentPos.getYpos() + yDir].isDoorOpen())
-                    return rooms[currentPos.getXpos(), currentPos.getYpos() + yDir];
-                
-                if (yDir == 1 && yDoors[currentPos.getXpos(), currentPos.getYpos()].isDoorOpen())
-                    return rooms[currentPos.getXpos(), currentPos.getYpos() + yDir];
+                if (other_yDir == -1 && _yDoors[currentPos.getXpos(), currentPos.getYpos() + other_yDir].isDoorOpen())
+                    return _rooms[currentPos.getXpos(), currentPos.getYpos() + other_yDir];
+
+                if (other_yDir == 1 && _yDoors[currentPos.getXpos(), currentPos.getYpos()].isDoorOpen())
+                    return _rooms[currentPos.getXpos(), currentPos.getYpos() + other_yDir];
             }
 
 
             return currentPos;
         }
 
-        public bool isFinalRoom(int x, int y)
+        public void PrintMaze(Room other_playerRoom)
         {
-            return rooms[x, y].isEndRoom();
-        }
-
-        public Door[,] getDoors(string doors)
-        {
-            if (doors.Equals("x"))
-                return xDoors;
-
-            return yDoors;
-        }
-
-        public Room getCurrentRoom(int x, int y)
-        {
-            return rooms[x, y];
-        }
-
-        public void PrintMaze(Room playerRoom)
-        {
-            for (int i = 0; i < rooms.GetLength(0); i++)
+            for (int i = 0; i < _rooms.GetLength(0); i++)
             {
-                for (int j = 0; j < rooms.GetLength(1); j++)
+                for (int j = 0; j < _rooms.GetLength(1); j++)
                 {
-                    Console.Write("[" + checkRoom(playerRoom, rooms[j,i]) + "]");
+                    Console.Write("[" + checkRoom(other_playerRoom, _rooms[j, i]) + "]");
 
-                    Console.Write(checkDoorState(j, i, xDoors));
-                }
+                    Console.Write(checkDoorState(j, i, _xDoors));
+                }//end for loop
                 Console.Write("\n");
 
-                for (int j = 0; j < rooms.GetLength(1); j++)
+                for (int j = 0; j < _rooms.GetLength(1); j++)
                 {
-                    Console.Write(" " + checkDoorState(j, i, yDoors) + "  ");
-                }
+                    Console.Write(" " + checkDoorState(j, i, _yDoors) + "  ");
+                }//end for loop
                 Console.Write("\n");
             }
         }
+#endregion
 
-        private string checkDoorState(int x, int y, Door[,] doors)
+#region checkingMethods
+        public bool isFinalRoom(int other_x, int other_y)
         {
-            if(x < doors.GetLength(0) && y < doors.GetLength(1))
-            //if(xDoors[x, y] != null)
-                return doors[x, y].getState();
+            return _rooms[other_x, other_y].isEndRoom();
+        }
+
+        private string checkDoorState(int other_x, int other_y, Door[,] other_doors)
+        {
+            if (other_x < other_doors.GetLength(0) && other_y < other_doors.GetLength(1))
+            //if(_xDoors[x, y] != null)
+                return other_doors[other_x, other_y].getState();
 
             return "";
         }
 
-        private string checkRoom(Room playerRoom, Room cur)
+
+        private string checkRoom(Room other_playerRoom, Room other_cur)
         {
             //Console.WriteLine(playerRoom.getXpos() + " " cur.getXpos() + " " + playerRoom.getYpos() + " " + playerRoom.getYpos());
 
-            if (playerRoom.getXpos() == cur.getXpos() && playerRoom.getYpos() == cur.getYpos())
+            if (other_playerRoom.getXpos() == other_cur.getXpos() && other_playerRoom.getYpos() == other_cur.getYpos())
                 return "P";
-            else if (finalRoom.getXpos() - 1 == cur.getXpos() && finalRoom.getYpos() - 1 == cur.getYpos())
+            else if (finalRoom.getXpos() - 1 == other_cur.getXpos() && finalRoom.getYpos() - 1 == other_cur.getYpos())
                 return "G";
 
             return " ";
         }
 
-        public bool isHDoorLocked(int x, int y)
+        public bool isHDoorLocked(int other_x, int other_y)
         {
-            return xDoors[x, y].isDoorLocked();
+            return _xDoors[other_x, other_y].isDoorLocked();
         }
 
-        public bool isVDoorLocked(int x, int y)
+        public bool isVDoorLocked(int other_x, int other_y)
         {
-            return yDoors[x, y].isDoorLocked();
+            return _yDoors[other_x, other_y].isDoorLocked();
+        }
+#endregion
+
+#region Serializable
+        public Maze(SerializationInfo other_info, StreamingContext other_ctxt)
+        {
+            this._rooms = (Room[,])other_info.GetValue("_rooms", typeof(Room[,]));
+            this._xDoors = (Door[,])other_info.GetValue("_xDoors", typeof(Door[,]));
+            this._yDoors = (Door[,])other_info.GetValue("_yDoors", typeof(Door[,]));
+            this.finalRoom = (Room)other_info.GetValue("finalRoom", typeof(Room));
         }
 
-        public Maze(SerializationInfo info, StreamingContext ctxt)
+        public void GetObjectData(SerializationInfo other_info, StreamingContext other_ctxt)
         {
-            this.rooms = (Room[,])info.GetValue("rooms", typeof(Room[,]));
-            this.xDoors = (Door[,])info.GetValue("xDoors", typeof(Door[,]));
-            this.yDoors = (Door[,])info.GetValue("yDoors", typeof(Door[,]));
-            this.finalRoom = (Room)info.GetValue("finalRoom", typeof(Room));
+            other_info.AddValue("_rooms", this._rooms);
+            other_info.AddValue("_xDoors", this._xDoors);
+            other_info.AddValue("_yDoors", this._yDoors);
+            other_info.AddValue("finalRoom", this.finalRoom);
         }
+#endregion
 
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
-        {
-            info.AddValue("rooms", this.rooms);
-            info.AddValue("xDoors", this.xDoors);
-            info.AddValue("yDoors", this.yDoors);
-            info.AddValue("finalRoom", this.finalRoom);
-        }
     }
 }

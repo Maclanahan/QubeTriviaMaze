@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Daniel Heffley
+//Sam Gronhovd
+//Kevin Reynolds
+//Triva Maze / Final Project
+//Last Modified: 12/9/12
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +15,16 @@ namespace TriviaMaze
 {
     public class QuestionManager
     {
-        private SQLiteConnection sql_con;
-        private SQLiteCommand sql_cmd;
+        private SQLiteConnection _sql_con;
+        private SQLiteCommand _sql_cmd;
         private string _type;
 
-        public QuestionManager(string type)
+        public QuestionManager(string other_type)
         {
             try
             {
-                _type = type;
-                sql_con = new SQLiteConnection("Data Source=questions.db;Version=3;New=False;Compress=True;");
+                _type = other_type;
+                _sql_con = new SQLiteConnection("Data Source=questions.db;Version=3;New=False;Compress=True;");
             }
             catch (Exception e)
             {
@@ -27,14 +33,17 @@ namespace TriviaMaze
             
         }
 
+#region Accessors / Mutators
         public String getType()
         {
             return _type;
         }
+#endregion
 
+#region Main Behaviors
         public void manage()
         {
-            sql_con.Open();
+            _sql_con.Open();
 
             bool repeat = true;
 
@@ -61,7 +70,7 @@ namespace TriviaMaze
                     Console.WriteLine("Input was invalid.");
             }
 
-            sql_con.Close();
+            _sql_con.Close();
         }
 
         private void add()
@@ -115,20 +124,20 @@ namespace TriviaMaze
 
             if (_type.Equals("MCQuestions"))
             {
-                sql_cmd = new SQLiteCommand("INSERT INTO " + _type + " (Question, ChoiceA, ChoiceB, ChoiceC, ChoiceD, Answer) VALUES (@question, @one, @two, @three, @four, @answer)", sql_con);
+                _sql_cmd = new SQLiteCommand("INSERT INTO " + _type + " (Question, ChoiceA, ChoiceB, ChoiceC, ChoiceD, Answer) VALUES (@question, @one, @two, @three, @four, @answer)", _sql_con);
 
                 SQLiteParameter pOne = new SQLiteParameter("@one", DbType.String) { Value = one };
                 SQLiteParameter pTwo = new SQLiteParameter("@two", DbType.String) { Value = two };
                 SQLiteParameter pThree = new SQLiteParameter("@three", DbType.String) { Value = three };
                 SQLiteParameter pFour = new SQLiteParameter("@four", DbType.String) { Value = four };
 
-                sql_cmd.Parameters.Add(pOne);
-                sql_cmd.Parameters.Add(pTwo);
-                sql_cmd.Parameters.Add(pThree);
-                sql_cmd.Parameters.Add(pFour);
+                _sql_cmd.Parameters.Add(pOne);
+                _sql_cmd.Parameters.Add(pTwo);
+                _sql_cmd.Parameters.Add(pThree);
+                _sql_cmd.Parameters.Add(pFour);
             }
             else if ( _type.Equals("TFQuestions") || _type.Equals("SAQuestions"))
-                sql_cmd = new SQLiteCommand("INSERT INTO " + _type + " (Question, Answer) VALUES (@question, @answer)", sql_con);
+                _sql_cmd = new SQLiteCommand("INSERT INTO " + _type + " (Question, Answer) VALUES (@question, @answer)", _sql_con);
             else
             {
                 Console.WriteLine("Invalid Type.");
@@ -138,10 +147,10 @@ namespace TriviaMaze
             SQLiteParameter pQuestion = new SQLiteParameter("@question", DbType.String ) { Value = question };
             SQLiteParameter pAnswer = new SQLiteParameter("@answer", DbType.String) { Value = answer };
 
-            sql_cmd.Parameters.Add(pQuestion);
-            sql_cmd.Parameters.Add(pAnswer);
+            _sql_cmd.Parameters.Add(pQuestion);
+            _sql_cmd.Parameters.Add(pAnswer);
 
-            sql_cmd.ExecuteNonQuery();
+            _sql_cmd.ExecuteNonQuery();
         }
 
         private void remove()
@@ -151,7 +160,7 @@ namespace TriviaMaze
             string str = "";
             bool repeat = true;
 
-            using (SQLiteCommand cmd = new SQLiteCommand(stm, sql_con))
+            using (SQLiteCommand cmd = new SQLiteCommand(stm, _sql_con))
             {
                 using (SQLiteDataReader rdr = cmd.ExecuteReader())
                 {
@@ -207,19 +216,19 @@ namespace TriviaMaze
 
             Console.WriteLine("Removed: " + num + ") Question: " + str);
 
-            sql_cmd = new SQLiteCommand("DELETE FROM " + _type + " WHERE Question=@Question", sql_con);
+            _sql_cmd = new SQLiteCommand("DELETE FROM " + _type + " WHERE Question=@Question", _sql_con);
 
             SQLiteParameter pQuestion = new SQLiteParameter("@Question", DbType.String) { Value = str };
-            sql_cmd.Parameters.Add(pQuestion);
+            _sql_cmd.Parameters.Add(pQuestion);
 
-            sql_cmd.ExecuteNonQuery();
+            _sql_cmd.ExecuteNonQuery();
         }
 
         private void display()
         {
             string stm = "SELECT * FROM " + _type;
             
-            using (SQLiteCommand cmd = new SQLiteCommand(stm, sql_con))
+            using (SQLiteCommand cmd = new SQLiteCommand(stm, _sql_con))
             {
                 using (SQLiteDataReader rdr = cmd.ExecuteReader())
                 {
@@ -244,5 +253,7 @@ namespace TriviaMaze
                 }
             }
         }
+#endregion
+
     }
 }

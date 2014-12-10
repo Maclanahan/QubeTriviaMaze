@@ -53,8 +53,6 @@
     <Compile Include="Driver.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="MazeFactory.cs" />
-    <Compile Include="Pathfinder.cs" />
-    <Compile Include="PathNode.cs" />
     <Compile Include="QuestionManager.cs" />
     <Compile Include="MultipleChoiceQuestion.cs" />
     <Compile Include="Program.cs" />
