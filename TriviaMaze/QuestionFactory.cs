@@ -26,7 +26,6 @@ namespace TriviaMaze
             LoadData();
 
             CreateList();
-
         }
 
         public List<AbstractQuestion> getQuestions()

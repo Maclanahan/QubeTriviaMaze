@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace TriviaMaze
 {
     [Serializable()]
-    class TrueFalseQuestion :AbstractQuestion
+    public class TrueFalseQuestion :AbstractQuestion
     {
         public TrueFalseQuestion(string quest, string answer)
             : base(quest, answer)

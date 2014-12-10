@@ -8,15 +8,20 @@ namespace TriviaMazeTests
     public class RoomTests
     {
         [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void roomConstructorTest()
         {
-            Assert.Fail();
+            Room room = new Room(0, -1, 2, 2);
         }
 
         [TestMethod]
         public void isEndRoomTest()
         {
-            Assert.Fail();
+            Room room = new Room(2, 2, 2, 2);
+            Assert.AreEqual(room.isEndRoom(), true);
+
+            room = new Room(0, 1, 2, 2);
+            Assert.AreEqual(room.isEndRoom(), false);
         }
     }
 }

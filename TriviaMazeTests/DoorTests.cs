@@ -8,27 +8,13 @@ namespace TriviaMazeTests
     public class DoorTests
     {
         [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
         public void doorConstructorTest()
         {
-            Assert.Fail();
-        }
+            TrueFalseQuestion question = new TrueFalseQuestion("question","answer");
+            Door door = new Door(question);
 
-        [TestMethod]
-        public void stateTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void isDoorOpenTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void getStateTest()
-        {
-            Assert.Fail();
+            door = new Door(null);
         }
     }
 }

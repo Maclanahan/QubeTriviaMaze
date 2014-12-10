@@ -8,57 +8,20 @@ namespace TriviaMazeTests
     public class DriverTests
     {
         [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void driverConstructorTest()
         {
-            Assert.Fail();
+            Driver driver = new Driver(0, 0, 2, 2, -1);
         }
 
         [TestMethod]
-        public void enterMazeTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
         public void setCurrentRoomTest()
         {
-            Assert.Fail();
-        }
+            Driver driver = new Driver(0, 0, 2, 2, 3);
+            Room room = null;
 
-        [TestMethod]
-        public void playerActTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void moveUpTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void moveRightTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void moveDownTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void moveLeftTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void saveGameTest()
-        {
-            Assert.Fail();
+            driver.setCurrentRoom(room);
         }
     }
 }

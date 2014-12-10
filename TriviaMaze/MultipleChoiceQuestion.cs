@@ -8,13 +8,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace TriviaMaze
 {
     [Serializable()]
-    class MultipleChoiceQuestion : AbstractQuestion
+    public class MultipleChoiceQuestion : AbstractQuestion
     {
         protected List<string> sChoices;
 
         public MultipleChoiceQuestion(string quest, string answer, List<string> choices)
             : base(quest, answer)
         {
+            if (quest == null || answer == null || choices == null)
+                throw new NullReferenceException();
+
             sChoices = choices;
         }
 

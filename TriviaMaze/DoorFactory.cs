@@ -5,17 +5,23 @@ using System.Text;
 
 namespace TriviaMaze
 {
-    class DoorFactory
+    public class DoorFactory
     {
         List<AbstractQuestion> questions;
 
         public DoorFactory(List<AbstractQuestion> quest)
         {
+            if(quest == null)
+                throw new NullReferenceException();
+
             questions = quest;
         }
 
         public Door[,] makeHDoors(int size)
         {
+            if (size <= 0)
+                throw new ArgumentOutOfRangeException();
+
             Door[,] hDoors = new Door[size - 1, size ];
             for (int i = 0; i < size - 1; i ++)
             {
@@ -30,6 +36,9 @@ namespace TriviaMaze
 
         public Door[,] makeVDoors(int size)
         {
+            if (size <= 0)
+                throw new ArgumentOutOfRangeException();
+
             Door[,] vDoors = new Door[size, size - 1];
             for (int i = 0; i < size; i++)
             {
@@ -41,5 +50,9 @@ namespace TriviaMaze
             }//end outer loop
             return vDoors;
         }
+
+        public List<AbstractQuestion> Questions { get { return this.questions; } }
     }
+
+
 }

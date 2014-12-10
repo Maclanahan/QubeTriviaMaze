@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using TriviaMaze;
 
 namespace TriviaMazeTests
@@ -8,15 +9,12 @@ namespace TriviaMazeTests
     public class QuestionFactoryTests
     {
         [TestMethod]
+        [ExpectedException(typeof(DllNotFoundException))]
         public void getQuestionsTest()
         {
-            Assert.Fail();
-        }
+            List<AbstractQuestion> questions = new List<AbstractQuestion>();
 
-        [TestMethod]
-        public void swapQuestionsTest()
-        {
-            Assert.Fail();
+            QuestionFactory qf = new QuestionFactory();
         }
     }
 }

@@ -8,13 +8,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace TriviaMaze
 {
     [Serializable()]
-    class Door : ISerializable
+    public class Door : ISerializable
     {
         private int _state; // 0 = open, 1 = closed, 2 = locked
         private AbstractQuestion _question;
 
         public Door(AbstractQuestion question)
         {
+            if (question == null)
+                throw new NullReferenceException();
+
             _state = 1;
             _question = question;
         }

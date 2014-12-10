@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TriviaMaze
 {
-    class Driver
+    public class Driver
     {
         private int _xpos;
         private int _ypos;
@@ -17,6 +17,13 @@ namespace TriviaMaze
 
         public Driver(int xpos, int ypos, int endXPos, int endYPos, int size)
         {
+            if (xpos < 0 || xpos >= size || 
+                ypos < 0 || xpos >= size || 
+                endXPos < 0 || endXPos >= size ||
+                endYPos < 0 || endYPos >= size ||
+                size < 0)
+                throw new ArgumentOutOfRangeException();
+
             _xpos = xpos;
             _ypos = ypos;
             _endXPos = endXPos;
@@ -57,6 +64,9 @@ namespace TriviaMaze
 
         public void setCurrentRoom(Room current)
         {
+            if (current == null)
+                throw new NullReferenceException();
+
             currentRoom = current;
         }
 

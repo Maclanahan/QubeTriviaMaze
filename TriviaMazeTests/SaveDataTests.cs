@@ -8,21 +8,12 @@ namespace TriviaMazeTests
     public class SaveDataTests
     {
         [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
         public void saveDataConstructorTest()
         {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void getMazeTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void getPositionTest()
-        {
-            Assert.Fail();
+            Maze maze = null;
+            Room room = null;
+            SaveData sd = new SaveData(maze, room);
         }
     }
 }

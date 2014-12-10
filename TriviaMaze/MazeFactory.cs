@@ -5,13 +5,14 @@ using System.Text;
 
 namespace TriviaMaze
 {
-    class MazeFactory
+    public class MazeFactory
     {
         public MazeFactory(){ }
 
         public Maze makeMaze(int size, Door[,] xDoors, Door[,]yDoors)
         {
-            
+            if (xDoors == null || yDoors == null || size <= 0)
+                throw new Exception();
 
             Room[,] rooms = new Room[size,size];
             for(int i = 0; i < size; i++)

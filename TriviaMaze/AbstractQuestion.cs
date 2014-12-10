@@ -84,6 +84,9 @@ namespace TriviaMaze
 
         abstract public void GetObjectData(SerializationInfo info, StreamingContext ctxt);
 
+        public string Question{ get { return this.sQuest; } }
+        public string Answer { get { return this.sAnswer; } }
+
         //public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         //{
         //    info.AddValue("sQuest", this.sQuest);

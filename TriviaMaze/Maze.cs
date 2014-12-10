@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace TriviaMaze
 {
     [Serializable()]
-    class Maze : ISerializable
+    public class Maze : ISerializable
     {
         private Room[,] rooms;
         private Door[,] xDoors;
@@ -18,6 +18,9 @@ namespace TriviaMaze
 
         public Maze(Room[,] _rooms, Door[,] _xDoors, Door[,] _yDoors, int size)
         {
+            if (_rooms == null || _xDoors == null || _yDoors == null || size <= 0)
+                throw new Exception();
+
             rooms = _rooms;
             xDoors = _xDoors;
             yDoors = _yDoors;

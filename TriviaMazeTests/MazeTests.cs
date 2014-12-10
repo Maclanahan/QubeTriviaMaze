@@ -8,51 +8,12 @@ namespace TriviaMazeTests
     public class MazeTests
     {
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
         public void mazeConstructorTest()
         {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void moveTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void isFinalRoomTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void getDoorsTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void getCurrentRoomTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void printMazeTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void checkDoorStateTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void checkRoomTest()
-        {
-            Assert.Fail();
+            Room[,] room = null;
+            Door[,] door = null;
+            Maze maze = new Maze(room, door, door, 3);
         }
     }
 }

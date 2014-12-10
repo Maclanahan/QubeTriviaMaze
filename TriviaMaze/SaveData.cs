@@ -9,7 +9,7 @@ namespace TriviaMaze
 {
 
     [Serializable()]
-    class SaveData :ISerializable
+    public class SaveData :ISerializable
     {
         private Maze maze;
         private Room position;
@@ -17,6 +17,9 @@ namespace TriviaMaze
 
         public SaveData(Maze _maze, Room _position)
         {
+            if (_maze == null || _position == null)
+                throw new NullReferenceException();
+
             maze = _maze;
             position = _position;
         }

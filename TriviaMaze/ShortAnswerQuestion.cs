@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace TriviaMaze
 {
     [Serializable()]
-    class ShortAnswerQuestion :AbstractQuestion
+    public class ShortAnswerQuestion :AbstractQuestion
     {
         public ShortAnswerQuestion(string quest, string answer)
             : base(quest, answer)

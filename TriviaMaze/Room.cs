@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace TriviaMaze
 {
     [Serializable()]
-    class Room : ISerializable
+    public class Room : ISerializable
     {
         private int _xpos;
         private int _ypos;
@@ -19,6 +19,10 @@ namespace TriviaMaze
 
         public Room(int xpos, int ypos, int endxpos, int endypos)
         {
+            if (xpos < 0 || ypos < 0 ||
+                endxpos < 0 || endypos < 0)
+                throw new ArgumentOutOfRangeException();
+
             _xpos = xpos;
             _ypos = ypos;
 

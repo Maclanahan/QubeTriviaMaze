@@ -8,9 +8,13 @@ namespace TriviaMazeTests
     public class MazeFactoryTests
     {
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
         public void makeMazeTest()
         {
-            Assert.Fail();
+            MazeFactory mf = new MazeFactory();
+            Door[,] door = null;
+            
+            Maze maze = mf.makeMaze(3,door,door);
         }
     }
 }
