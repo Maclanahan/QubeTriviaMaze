@@ -92,7 +92,7 @@ namespace TriviaMaze
 
         private static int askForMazeSize()
         {
-            Console.WriteLine("Choose Difficulty/n Enter any Integer between the values of 2 and 9\n 2 being the easiest, and 9 being the hardest");
+            Console.WriteLine("Choose Difficulty\nEnter any Integer between the values of 2 and 9\n2 being the easiest, and 9 being the hardest");
 
             string str = Console.ReadLine();
             
