@@ -13,7 +13,7 @@ namespace TriviaMazeTests
         {
             Maze maze = null;
             Room room = null;
-            SaveData sd = new SaveData(maze, room);
+            SaveData sd = new SaveData(maze, room, 3);
         }
     }
 }

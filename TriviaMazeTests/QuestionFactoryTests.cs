@@ -14,7 +14,7 @@ namespace TriviaMazeTests
         {
             List<AbstractQuestion> questions = new List<AbstractQuestion>();
 
-            QuestionFactory qf = new QuestionFactory();
+            QuestionFactory qf = new QuestionFactory(3);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TriviaMazeTests
     public class MazeTests
     {
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(NullReferenceException))]
         public void mazeConstructorTest()
         {
             Room[,] room = null;

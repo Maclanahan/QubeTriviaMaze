@@ -184,7 +184,7 @@ namespace TriviaMaze
 
                         if (num <= i && num > 0)
                             repeat = false;
-                        if (num == 0)
+                        else if (num == 0)
                             return;
                         else
                             Console.WriteLine("Invalid input. Please try again.");
