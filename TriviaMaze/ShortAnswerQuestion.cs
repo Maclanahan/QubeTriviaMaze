@@ -22,7 +22,7 @@ namespace TriviaMaze
 
         override protected void displayChoices()
         {
-            Console.WriteLine("Please Type in your 1 word answer.");
+            Console.WriteLine("Please Type in your answer.");
         }
 
 #region Serializable
